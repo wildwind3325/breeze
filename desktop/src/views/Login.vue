@@ -9,10 +9,11 @@
         </el-radio-group>
       </div>
       <div class="login-box-item">
-        <el-input v-model="account" placeholder="请输入账号" />
+        <el-input v-model="account" prefix-icon="User" placeholder="请输入账号" />
       </div>
       <div class="login-box-item">
-        <el-input v-model="password" type="password" placeholder="请输入密码" @keyup.enter.native="login" />
+        <el-input v-model="password" type="password" prefix-icon="Lock" placeholder="请输入密码"
+          @keyup.enter.native="login" />
       </div>
       <div class="login-box-item">
         <el-button type="primary" style="width: 100%;" @click="login">登录</el-button>
