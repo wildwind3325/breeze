@@ -1,3 +1,1 @@
-export default {
-  message: 'Hello world'
-};
+export default {};

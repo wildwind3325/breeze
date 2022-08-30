@@ -1,25 +1,22 @@
 <template>
   <div class="div-center login-page">
     <div class="div-center login-box">
-      <div class="login-box-title">用户登录{{ $t('message') }}</div>
+      <div class="login-box-title">用户登录</div>
       <div class="login-box-item" style="color: white;">
-        <RadioGroup v-model="locale" @on-change="changeLang">
-          <Radio label="zh"><span>中文</span></Radio>
-          <Radio label="en"><span>English</span></Radio>
-        </RadioGroup>
+        <el-radio-group v-model="locale" @change="changeLang">
+          <el-radio label="zh">中文</el-radio>
+          <el-radio label="en">English</el-radio>
+        </el-radio-group>
       </div>
       <div class="login-box-item">
-        <Input v-model="account" prefix="md-person" placeholder="请输入账号" />
+        <el-input v-model="account" placeholder="请输入账号" />
       </div>
       <div class="login-box-item">
-        <Input v-model="password" prefix="md-lock" type="password" placeholder="请输入密码" @on-enter="login" />
+        <el-input v-model="password" type="password" placeholder="请输入密码" @keyup.enter.native="login" />
       </div>
       <div class="login-box-item">
-        <Button type="primary" @click="login" long>登录</Button>
+        <el-button type="primary" style="width: 100%;" @click="login">登录</el-button>
       </div>
-    </div>
-    <div>
-      <Page :total="100" show-sizer />
     </div>
   </div>
 </template>
@@ -35,10 +32,12 @@ export default {
     };
   },
   mounted() {
+    window.$locale.set(this.locale);
   },
   methods: {
     changeLang() {
       this.$i18n.locale = this.locale;
+      window.$locale.set(this.locale);
       localStorage.setItem('lang', this.locale);
     },
     async login() {
@@ -48,7 +47,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .login-page {
   height: 100vh;
   background-color: #2d3a4b;

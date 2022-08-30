@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './index';
 
 export const login = (account, password) => {
   return axios({
