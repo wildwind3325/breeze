@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-axios.interceptors.request.use(function (config) {
+const request = axios.create({ timeout: 5000 });
+
+request.interceptors.request.use(function (config) {
   config.url = '/' + config.url;
   if (config.headers.Spin !== 'false') window.$spin.show();
   return config;
@@ -9,7 +11,7 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
-axios.interceptors.response.use(function (response) {
+request.interceptors.response.use(function (response) {
   window.$spin.hide();
   if (response.data.code < 0 && router.currentRoute.path !== '/') {
     localStorage.setItem('target_uri', router.currentRoute.fullPath);
@@ -21,4 +23,4 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
-export default axios;
+export default request;

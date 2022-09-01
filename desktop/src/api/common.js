@@ -1,7 +1,7 @@
-import axios from './index';
+import request from '../util/request';
 
 export const login = (account, password) => {
-  return axios({
+  return request({
     method: 'POST',
     url: 'api/common/login',
     data: {
@@ -12,14 +12,14 @@ export const login = (account, password) => {
 };
 
 export const logout = () => {
-  return axios({
+  return request({
     method: 'POST',
     url: 'api/common/logout'
   });
 };
 
 export const status = () => {
-  return axios({
+  return request({
     method: 'POST',
     url: 'api/common/status'
   });
