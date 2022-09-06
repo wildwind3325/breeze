@@ -42,7 +42,7 @@ export default {
       localStorage.setItem('lang', this.locale);
     },
     async login() {
-      console.log('登录');
+      this.$router.push('/home');
     }
   }
 }
