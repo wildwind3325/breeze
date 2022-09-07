@@ -2,8 +2,8 @@
   <div class="div-center login-page">
     <div class="div-center login-box">
       <div class="login-box-title">用户登录</div>
-      <div class="login-box-item" style="color: white;">
-        <el-radio-group v-model="locale" @change="changeLang">
+      <div class="login-box-item">
+        <el-radio-group v-model="locale" @change="lang">
           <el-radio label="zh">中文</el-radio>
           <el-radio label="en">English</el-radio>
         </el-radio-group>
@@ -36,7 +36,7 @@ export default {
     window.$locale.set(this.locale);
   },
   methods: {
-    changeLang() {
+    lang() {
       this.$i18n.locale = this.locale;
       window.$locale.set(this.locale);
       localStorage.setItem('lang', this.locale);
