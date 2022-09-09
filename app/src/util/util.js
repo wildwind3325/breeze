@@ -34,6 +34,11 @@ var util = {
   },
   randomString(len) {
     return crypto.randomBytes(len).toString('hex').substring(0, len);
+  },
+  getPath(val) {
+    var path = require('path');
+    let dir = path.join(__dirname, '../');
+    return val.substring(dir.length, val.lastIndexOf('.')).replace(/[\\/]/g, '.');
   }
 };
 

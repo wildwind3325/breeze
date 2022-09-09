@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { login, status } from '../api/login';
 export default {
   name: 'Login',
   data() {
@@ -32,8 +33,18 @@ export default {
       password: ''
     };
   },
-  mounted() {
+  async mounted() {
     window.$locale.set(this.locale);
+    try {
+      let target = localStorage.getItem('target_uri') || '/home';
+      let res = await status();
+      if (res.data.code === 0 && res.data.data.loggedIn) {
+        localStorage.removeItem('target_uri');
+        this.$router.replace(target);
+      }
+    } catch (err) {
+      alert('初始化时发生错误：' + err.message);
+    }
   },
   methods: {
     lang() {
@@ -42,7 +53,29 @@ export default {
       localStorage.setItem('lang', this.locale);
     },
     async login() {
-      this.$router.push('/home');
+      if (!this.account || !this.password) {
+        this.$message({
+          type: 'warning',
+          message: '请先输入账号和密码信息'
+        });
+        return;
+      }
+      try {
+        let res = await login(this.account, this.password);
+        if (res.data.code !== 0) {
+          this.$message({
+            type: 'error',
+            message: '登录失败：' + res.data.msg
+          });
+          return;
+        }
+        this.$router.replace('/home');
+      } catch (err) {
+        this.$message({
+          type: 'error',
+          message: '登录失败：' + err.message
+        });
+      }
     }
   }
 }

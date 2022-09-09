@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Login from '../views/Login.vue';
+import Master from '../views/Master.vue';
 import Home from '../views/Home.vue';
 import NotFound from '../views/NotFound.vue';
 
@@ -8,7 +9,7 @@ const routes = [{
   component: Login
 }, {
   path: '/home',
-  component: Home
+  component: Master
 }, {
   path: '/:pathMatch(.*)',
   component: NotFound

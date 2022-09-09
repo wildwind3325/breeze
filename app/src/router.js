@@ -15,7 +15,7 @@ var addRoutes = (app, root, dir) => {
 };
 
 var router = app => {
-  let safeRoutes = /^\/api\/common\/.+$/;
+  let safeRoutes = /^\/api\/login\/.+$/;
   app.all('/api/*', (req, res, next) => {
     if (!safeRoutes.test(req.url) && !req.session.user) {
       res.send({
