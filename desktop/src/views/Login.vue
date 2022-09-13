@@ -9,10 +9,10 @@
         </el-radio-group>
       </div>
       <div class="login-box-item">
-        <el-input v-model="account" prefix-icon="User" placeholder="请输入账号" />
+        <el-input v-model="account" ref="account" prefix-icon="User" placeholder="请输入账号" />
       </div>
       <div class="login-box-item">
-        <el-input v-model="password" type="password" prefix-icon="Lock" placeholder="请输入密码"
+        <el-input v-model="password" type="password" ref="password" prefix-icon="Lock" placeholder="请输入密码"
           @keyup.enter.native="login" />
       </div>
       <div class="login-box-item">
@@ -29,11 +29,12 @@ export default {
   data() {
     return {
       locale: localStorage.getItem('lang') || 'zh',
-      account: '',
+      account: 'administrator',
       password: ''
     };
   },
   async mounted() {
+    this.$refs.password.focus();
     window.$locale.set(this.locale);
     try {
       let target = localStorage.getItem('target_uri') || '/home';

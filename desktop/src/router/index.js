@@ -6,12 +6,24 @@ import NotFound from '../views/NotFound.vue';
 
 const routes = [{
   path: '/',
+  name: 'Login',
   component: Login
 }, {
   path: '/home',
-  component: Master
+  name: 'Master',
+  component: Master,
+  children: [{
+    path: '',
+    name: 'Home',
+    component: Home
+  }, {
+    path: '/setting',
+    name: 'Setting',
+    component: () => import('../views/system/Setting.vue')
+  }]
 }, {
   path: '/:pathMatch(.*)',
+  name: 'NotFound',
   component: NotFound
 }];
 
