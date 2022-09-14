@@ -3,7 +3,6 @@ import axios from 'axios';
 const request = axios.create({ timeout: 5000 });
 
 request.interceptors.request.use(function (config) {
-  config.url = '/' + config.url;
   if (config.headers.Spin !== 'false') window.$spin.show();
   return config;
 }, function (error) {

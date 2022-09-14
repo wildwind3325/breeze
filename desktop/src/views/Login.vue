@@ -3,7 +3,7 @@
     <div class="div-center login-box">
       <div class="login-box-title">用户登录</div>
       <div class="login-box-item">
-        <el-radio-group v-model="locale" @change="lang">
+        <el-radio-group v-model="locale" @change="changeLocale">
           <el-radio label="zh">中文</el-radio>
           <el-radio label="en">English</el-radio>
         </el-radio-group>
@@ -12,7 +12,7 @@
         <el-input v-model="account" ref="account" prefix-icon="User" placeholder="请输入账号" />
       </div>
       <div class="login-box-item">
-        <el-input v-model="password" type="password" ref="password" prefix-icon="Lock" placeholder="请输入密码"
+        <el-input v-model="password" type="password" prefix-icon="Lock" placeholder="请输入密码"
           @keyup.enter.native="login" />
       </div>
       <div class="login-box-item">
@@ -34,7 +34,6 @@ export default {
     };
   },
   async mounted() {
-    this.$refs.password.focus();
     window.$locale.set(this.locale);
     try {
       let target = localStorage.getItem('target_uri') || '/home';
@@ -48,7 +47,7 @@ export default {
     }
   },
   methods: {
-    lang() {
+    changeLocale() {
       this.$i18n.locale = this.locale;
       window.$locale.set(this.locale);
       localStorage.setItem('lang', this.locale);

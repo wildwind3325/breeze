@@ -1,13 +1,6 @@
 <template>
   <el-config-provider :locale="locale">
-    <router-view v-slot="{ Component }" v-loading.fullscreen.lock="loading">
-      <transition name="router-fade" mode="out-in">
-        <keep-alive v-if="$route.meta.keepAlive">
-          <component :is="Component" />
-        </keep-alive>
-        <component :is="Component" v-else />
-      </transition>
-    </router-view>
+    <router-view v-loading.fullscreen.lock="loading" />
   </el-config-provider>
 </template>
 

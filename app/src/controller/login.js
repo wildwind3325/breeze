@@ -1,62 +1,58 @@
-var express = require('express');
-
 var config = require('../config/config');
 var DB = require('../dao/db');
 var util = require('../util/util');
 
-var router = express.Router();
-
-router.post('/login', async function (req, res, next) {
-  try {
-    let account = req.body.account;
-    let password = req.body.password;
-    if (!account || !password) {
-      res.send({
-        code: 1,
-        msg: '请输入账号和密码'
-      });
-      return;
-    }
+var actions = {
+  rules: {
+    login: {
+      account: /^.{1,32}$/,
+      password: /^.{1,32}$/
+    },
+    logout: {},
+    status: {}
+  },
+  async login(req, res, data) {
+    let account = data.account;
+    let password = data.password;
     let db = new DB();
-    let rows = await db.find('select * from `base_user` where `status` = 0 and `account` = :account and `password` = :password', {
-      account: account,
-      password: util.md5(password + account)
+    let rows = await db.find('select * from `base_user` where `status` = 0 and `account` = :account', {
+      account: account
     });
     if (rows.length === 0) {
       res.send({
         code: 1,
-        msg: '错误的用户名或密码'
+        msg: '该用户不存在或已被停用'
       });
     } else {
-      req.session.user = rows[0];
-      res.send({ code: 0 });
+      if (rows[0].password !== util.md5(password + account)) {
+        res.send({
+          code: 1,
+          msg: '密码错误'
+        });
+      } else {
+        req.session.user = rows[0];
+        res.send({ code: 0 });
+      }
     }
-  } catch (err) {
-    res.send({
-      code: 1,
-      msg: err.message
-    });
+  },
+  logout(req, res, data) {
+    req.session.destroy(err => { });
+    res.clearCookie(config.cookie_name);
+    res.send({ code: 0 });
+  },
+  status(req, res, data) {
+    if (req.session.user) {
+      res.send({
+        code: 0,
+        data: { loggedIn: true }
+      });
+    } else {
+      res.send({
+        code: 0,
+        data: { loggedIn: false }
+      });
+    }
   }
-});
+};
 
-router.post('/logout', function (req, res, next) {
-  req.session.destroy(err => { });
-  res.clearCookie(config.cookie_name);
-  res.send({ code: 0 });
-});
-
-router.post('/status', function (req, res, next) {
-  if (req.session.user) {
-    res.send({
-      code: 0,
-      data: { loggedIn: true }
-    });
-  } else {
-    res.send({
-      code: 0,
-      data: { loggedIn: false }
-    });
-  }
-});
-
-module.exports = router;
+module.exports = actions;

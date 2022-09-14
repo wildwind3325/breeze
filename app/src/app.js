@@ -30,7 +30,7 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, '../public')));
-router(app);
+app.use('/api', router);
 
 app.use(function (req, res, next) {
   res.status(404).send({
