@@ -9,7 +9,7 @@
         </el-radio-group>
       </div>
       <div class="login-box-item">
-        <el-input v-model="account" ref="account" prefix-icon="User" placeholder="请输入账号" />
+        <el-input v-model="account" prefix-icon="User" placeholder="请输入账号" />
       </div>
       <div class="login-box-item">
         <el-input v-model="password" type="password" prefix-icon="Lock" placeholder="请输入密码"
@@ -34,7 +34,6 @@ export default {
     };
   },
   async mounted() {
-    window.$locale.set(this.locale);
     try {
       let target = localStorage.getItem('target_uri') || '/home';
       let res = await status();
@@ -42,9 +41,7 @@ export default {
         localStorage.removeItem('target_uri');
         this.$router.replace(target);
       }
-    } catch (err) {
-      alert('初始化时发生错误：' + err.message);
-    }
+    } catch (err) { }
   },
   methods: {
     changeLocale() {
@@ -56,7 +53,7 @@ export default {
       if (!this.account || !this.password) {
         this.$message({
           type: 'warning',
-          message: '请先输入账号和密码信息'
+          message: '请先输入完整的信息'
         });
         return;
       }

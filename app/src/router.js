@@ -42,7 +42,9 @@ router.post('/common', async function (req, res, next) {
     let rules = controller.rules;
     if (rules && rules[action]) {
       for (let key in rules[action]) {
-        if (!rules[action][key].test(data[key])) {
+        let rule = rules[action][key];
+        if ((rule instanceof RegExp && !rule.test(data[key]))
+          || (rule instanceof Function && !rule.call(this, data[key]))) {
           res.send({
             code: 1,
             msg: '输入的参数不符合要求'

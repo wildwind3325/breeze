@@ -11,3 +11,19 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.toolbar {
+  display: flex;
+  height: 40px;
+}
+
+.toolbar-function {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.toolbar-search {
+  display: flex;
+  align-items: center;
+}

@@ -26,6 +26,7 @@ export default {
         else this.locale = en;
       }
     };
+    window.$locale.set(localStorage.getItem('lang') || 'zh');
     window.$spin = {
       show: () => { this.loading = true; },
       hide: () => { this.loading = false; }

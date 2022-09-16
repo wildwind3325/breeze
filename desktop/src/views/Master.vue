@@ -14,11 +14,11 @@
             </el-icon>
             <span>首頁</span>
           </el-menu-item>
-          <el-menu-item index="/setting">
+          <el-menu-item index="/orgnization">
             <el-icon>
               <Setting />
             </el-icon>
-            <span>设置</span>
+            <span>部门管理</span>
           </el-menu-item>
         </el-menu>
       </el-scrollbar>
@@ -52,20 +52,23 @@ export default {
   name: 'Master',
   data() {
     return {
-      path: this.$route.path,
+      path: '',
       tags: [{
         path: '/home',
         label: '首页'
-      }, {
-        path: '/setting',
-        label: '设置'
       }]
     };
   },
   mounted() {
+    this.fixMenu();
   },
   updated() {
     if (this.path !== this.$route.path) {
+      this.fixMenu();
+    }
+  },
+  methods: {
+    fixMenu() {
       this.path = this.$route.path;
       let found = false;
       for (let i = 0; i < this.tags.length; i++) {
@@ -80,9 +83,7 @@ export default {
           label: '未知'
         });
       }
-    }
-  },
-  methods: {
+    },
     selectMenu(val) {
       for (let i = 0; i < this.tags.length; i++) {
         if (val === this.tags[i].path) {
@@ -170,7 +171,7 @@ export default {
 .navibar {
   width: calc(100vw - 200px);
   height: 30px;
-  padding: 0px 20px;
+  padding: 0px 20px 0px 15px;
   box-sizing: border-box;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
 }
@@ -182,7 +183,8 @@ export default {
 }
 
 .content {
-  width: calc(100vw - 200px);
-  height: calc(100vh - 80px);
+  width: calc(100vw - 240px);
+  height: calc(100vh - 100px);
+  padding: 10px 20px;
 }
 </style>
