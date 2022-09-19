@@ -45,7 +45,7 @@
     </div>
     <div style="flex-grow: 1;">
       <div class="header">
-        <el-button type="primary" @click="updateScroll">管理员</el-button>
+        <el-button type="primary">管理员</el-button>
         <el-button type="warning" @click="logout">注销</el-button>
       </div>
       <div class="navibar">
@@ -103,6 +103,9 @@ export default {
           label: '未知'
         });
       }
+      this.$nextTick(() => {
+        this.$refs.navibar.update();
+      });
     },
     selectMenu(val) {
       for (let i = 0; i < this.tags.length; i++) {
@@ -113,14 +116,9 @@ export default {
       }
       this.$router.push(val);
     },
-    updateScroll() {
-      this.$refs.navibar.update();
-    },
     async logout() {
-      try {
-        await logout();
-        this.$router.replace('/');
-      } catch (err) { }
+      try { await logout(); } catch (err) { }
+      this.$router.replace('/');
     },
     navi(item) {
       this.$router.push(item.path);

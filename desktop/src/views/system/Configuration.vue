@@ -13,12 +13,18 @@
         </el-table>
       </el-scrollbar>
     </div>
-    <div style="flex-grow: 1;"></div>
+    <div style="flex-grow: 1;">
+      <div class="toolbar">
+        <div class="toolbar-function">
+          <el-button type="success" icon="Plus" @click="add">新建</el-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { listGroup, addGroup, editGroup, removeGroup } from '../../api/system/configuration';
+import { listGroup, addGroup, editGroup, removeGroup, list, add, edit, remove } from '../../api/system/configuration';
 export default {
   name: 'Configuration',
   data() {
@@ -28,13 +34,22 @@ export default {
       formGroup: {
         id: 0,
         label: ''
+      },
+      list: [],
+      form: {
+        id: 0,
+        group_id: 0,
+        code: '',
+        label: '',
+        value: '',
+        memo: ''
       }
     };
   },
   async mounted() {
     try {
       let res = await listGroup();
-      if (res.data.code > 0) {
+      if (res.data.code !== 0) {
         this.$message({
           type: 'error',
           message: '获取数据失败：' + res.data.msg
@@ -58,7 +73,7 @@ export default {
         id: 0,
         label: ''
       };
-      this.save();
+      this.saveGroup();
     },
     editGroup() {
       if (!this.selectedItem) return;
@@ -66,7 +81,7 @@ export default {
         id: this.selectedItem.id,
         label: this.selectedItem.label
       };
-      this.save();
+      this.saveGroup();
     },
     removeGroup() {
       if (!this.selectedItem) return;
@@ -74,7 +89,7 @@ export default {
         .then(async () => {
           try {
             let res = await removeGroup(this.selectedItem.id);
-            if (res.data.code > 0) {
+            if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg
@@ -95,7 +110,7 @@ export default {
         })
         .catch(() => { });
     },
-    save() {
+    saveGroup() {
       this.$prompt('请输入名称', { inputValue: this.formGroup.label })
         .then(async ret => {
           if (!ret.value) {
@@ -114,7 +129,7 @@ export default {
             } else {
               res = await editGroup(this.formGroup);
             }
-            if (res.data.code > 0) {
+            if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg
@@ -138,6 +153,8 @@ export default {
           }
         })
         .catch(() => { });
+    },
+    add() {
     }
   }
 }

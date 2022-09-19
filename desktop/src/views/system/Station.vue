@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar">
     <div class="toolbar-function">
-      <el-button type="success" icon="Plus" @click="create">新建</el-button>
+      <el-button type="success" icon="Plus" @click="add">新建</el-button>
     </div>
   </div>
   <el-table :data="list">
@@ -14,9 +14,8 @@
     <el-table-column label="操作" width="200" align="center">
       <template #default="scope">
         <el-button-group>
-          <el-button type="warning" icon="Edit" @click="update(scope.row)" />
-          <el-button v-if="scope.row.parent_id > 0" type="danger" icon="Delete"
-            @click="remove(scope.row, scope.$index)" />
+          <el-button type="warning" icon="Edit" @click="edit(scope.row)" />
+          <el-button type="danger" icon="Delete" @click="remove(scope.row, scope.$index)" />
         </el-button-group>
       </template>
     </el-table-column>
@@ -43,7 +42,7 @@ export default {
     async query() {
       try {
         let res = await list();
-        if (res.data.code > 0) {
+        if (res.data.code !== 0) {
           this.$message({
             type: 'error',
             message: '获取数据失败：' + res.data.msg
@@ -58,14 +57,14 @@ export default {
         });
       }
     },
-    create() {
+    add() {
       this.form = {
         id: 0,
         label: ''
       };
       this.save();
     },
-    update(row) {
+    edit(row) {
       this.form = {
         id: row.id,
         label: row.label
@@ -77,7 +76,7 @@ export default {
         .then(async () => {
           try {
             let res = await remove(row.id);
-            if (res.data.code > 0) {
+            if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg
@@ -117,7 +116,7 @@ export default {
             } else {
               res = await edit(this.form);
             }
-            if (res.data.code > 0) {
+            if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg

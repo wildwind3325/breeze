@@ -65,7 +65,7 @@ export default {
     async query() {
       try {
         let res = await list();
-        if (res.data.code > 0) {
+        if (res.data.code !== 0) {
           this.$message({
             type: 'error',
             message: '获取数据失败：' + res.data.msg
@@ -101,7 +101,7 @@ export default {
         .then(async () => {
           try {
             let res = await remove(row.id);
-            if (res.data.code > 0) {
+            if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg
@@ -137,7 +137,7 @@ export default {
         } else {
           res = await edit(this.form);
         }
-        if (res.data.code > 0) {
+        if (res.data.code !== 0) {
           this.$message({
             type: 'error',
             message: '操作失败：' + res.data.msg

@@ -30,3 +30,35 @@ export const removeGroup = id => {
     data: { id: id }
   });
 };
+
+export const list = group_id => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=system.configuration&_action=list',
+    data: { group_id: group_id }
+  });
+};
+
+export const add = form => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=system.configuration&_action=add',
+    data: form
+  });
+};
+
+export const edit = form => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=system.configuration&_action=edit',
+    data: form
+  });
+};
+
+export const remove = id => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=system.configuration&_action=remove',
+    data: { id: id }
+  });
+};
