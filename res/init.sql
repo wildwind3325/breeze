@@ -26,7 +26,7 @@ CREATE TABLE `base_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(64) COLLATE utf8mb4_bin NOT NULL,
   `value` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `memo` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -56,13 +56,14 @@ DROP TABLE IF EXISTS `base_config_group`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `base_config_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `label_UNIQUE` (`label`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +72,7 @@ CREATE TABLE `base_config_group` (
 
 LOCK TABLES `base_config_group` WRITE;
 /*!40000 ALTER TABLE `base_config_group` DISABLE KEYS */;
+INSERT INTO `base_config_group` VALUES (1,'系统','2022-09-19 18:41:56','administrator','2022-09-19 18:42:27','administrator'),(2,'用户','2022-09-19 18:52:07','administrator','2022-09-19 18:52:07','administrator');
 /*!40000 ALTER TABLE `base_config_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +92,7 @@ CREATE TABLE `base_department` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +116,7 @@ CREATE TABLE `base_i18n` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `module_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
-  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(64) COLLATE utf8mb4_bin NOT NULL,
   `text_en` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `text_zh` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -144,12 +146,13 @@ DROP TABLE IF EXISTS `base_i18n_module`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `base_i18n_module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `label_UNIQUE` (`label`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,6 +204,7 @@ CREATE TABLE `base_lov` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `value` mediumtext COLLATE utf8mb4_bin NOT NULL,
   `memo` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -230,12 +234,13 @@ DROP TABLE IF EXISTS `base_lov_group`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `base_lov_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `label_UNIQUE` (`label`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -258,7 +263,7 @@ DROP TABLE IF EXISTS `base_menu`;
 CREATE TABLE `base_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL,
-  `name` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `type` int(11) NOT NULL COMMENT '0 菜单 1 权限',
   `route` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `icon` varchar(32) COLLATE utf8mb4_bin NOT NULL,
@@ -280,6 +285,62 @@ CREATE TABLE `base_menu` (
 LOCK TABLES `base_menu` WRITE;
 /*!40000 ALTER TABLE `base_menu` DISABLE KEYS */;
 /*!40000 ALTER TABLE `base_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `base_role`
+--
+
+DROP TABLE IF EXISTS `base_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `base_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `menus` mediumtext COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `label_UNIQUE` (`label`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `base_role`
+--
+
+LOCK TABLES `base_role` WRITE;
+/*!40000 ALTER TABLE `base_role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `base_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `base_station`
+--
+
+DROP TABLE IF EXISTS `base_station`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `base_station` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `label_UNIQUE` (`label`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `base_station`
+--
+
+LOCK TABLES `base_station` WRITE;
+/*!40000 ALTER TABLE `base_station` DISABLE KEYS */;
+INSERT INTO `base_station` VALUES (1,'CEO','2022-09-16 14:07:34','administrator','2022-09-16 14:07:34','administrator'),(2,'高级总监','2022-09-16 14:22:07','administrator','2022-09-16 14:22:07','administrator'),(3,'总监','2022-09-16 14:22:11','administrator','2022-09-16 14:27:34','administrator'),(4,'高级经理','2022-09-16 15:15:59','administrator','2022-09-16 15:15:59','administrator'),(5,'经理','2022-09-16 15:16:06','administrator','2022-09-16 15:16:06','administrator'),(6,'普通员工','2022-09-16 15:16:12','administrator','2022-09-16 15:59:42','administrator');
+/*!40000 ALTER TABLE `base_station` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -333,7 +394,7 @@ CREATE TABLE `base_user_org` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `department_id` int(11) NOT NULL,
-  `station` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `station_id` int(11) NOT NULL,
   `is_main` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
@@ -359,4 +420,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-15 19:14:07
+-- Dump completed on 2022-09-19 19:08:48

@@ -66,7 +66,9 @@ export default {
           });
           return;
         }
-        this.$router.replace('/home');
+        let target = localStorage.getItem('target_uri') || '/home';
+        localStorage.removeItem('target_uri');
+        this.$router.replace(target);
       } catch (err) {
         this.$message({
           type: 'error',

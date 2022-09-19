@@ -1,16 +1,14 @@
 var DB = require('../../dao/db');
 
-class OrgnizationController {
+class StationController {
   constructor() {
     this.rules = {
       list: {},
       add: {
-        parent_id: /^[1-9]\d*$/,
         label: /^.{1,32}$/
       },
       edit: {
         id: /^[1-9]\d*$/,
-        parent_id: /\d+$/,
         label: /^.{1,32}$/
       },
       remove: {
@@ -21,44 +19,32 @@ class OrgnizationController {
 
   async list(req, res, data) {
     let db = new DB();
-    let tree = await db.find('select * from `base_department` where `parent_id` = 0 limit 1');
-    if (tree.length > 0) {
-      let list = await db.find('select * from `base_department` where `parent_id` <> 0');
-      this.getOrgnization(list, tree[0]);
-    }
+    let list = await db.find('select * from `base_station`');
     res.send({
       code: 0,
-      data: tree
+      data: list
     });
-  }
-
-  getOrgnization(list, item) {
-    item.children = [];
-    for (let i = list.length - 1; i >= 0; i--) {
-      if (list[i].parent_id === item.id) {
-        item.children.push(list[i]);
-        list.splice(i, 1);
-      }
-    }
-    for (let i = 0; i < item.children.length; i++) {
-      this.getOrgnization(list, item.children[i]);
-    }
   }
 
   async add(req, res, data) {
     let db = new DB();
     let item = Object.assign({
+      created_at: new Date(),
       created_by: req.session.user.account,
+      updated_at: new Date(),
       updated_by: req.session.user.account
     }, data);
-    await db.insert('base_department', item);
-    res.send({ code: 0 });
+    await db.insert('base_station', item);
+    res.send({
+      code: 0,
+      data: item
+    });
   }
 
   async edit(req, res, data) {
     let db = new DB();
     let item = Object.assign({ updated_by: req.session.user.account }, data);
-    await db.update('base_department', item);
+    await db.update('base_station', item);
     res.send({ code: 0 });
   }
 
@@ -86,4 +72,4 @@ class OrgnizationController {
   }
 }
 
-module.exports = new OrgnizationController();
+module.exports = new StationController();

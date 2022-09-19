@@ -44,7 +44,7 @@ router.post('/common', async function (req, res, next) {
       for (let key in rules[action]) {
         let rule = rules[action][key];
         if ((rule instanceof RegExp && !rule.test(data[key]))
-          || (rule instanceof Function && !rule.call(this, data[key]))) {
+          || (rule instanceof Function && !rule.call(controller, data[key]))) {
           res.send({
             code: 1,
             msg: '输入的参数不符合要求'
@@ -55,7 +55,7 @@ router.post('/common', async function (req, res, next) {
     }
     delete data._module;
     delete data._action;
-    method.call(this, req, res, data);
+    method.call(controller, req, res, data);
   } catch (err) {
     logger.error(err.message, err);
     res.send({

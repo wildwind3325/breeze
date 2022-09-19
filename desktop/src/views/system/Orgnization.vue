@@ -19,8 +19,8 @@
     <el-table-column label="操作" width="200" align="center">
       <template #default="scope">
         <el-button-group>
-          <el-button type="success" icon="Plus" @click="create(scope.row)" />
-          <el-button type="warning" icon="Edit" @click="update(scope.row)" />
+          <el-button type="success" icon="Plus" @click="add(scope.row)" />
+          <el-button type="warning" icon="Edit" @click="edit(scope.row)" />
           <el-button v-if="scope.row.parent_id > 0" type="danger" icon="Delete" @click="remove(scope.row)" />
         </el-button-group>
       </template>
@@ -56,7 +56,7 @@ export default {
         parent_id: 0,
         label: ''
       }
-    }
+    };
   },
   mounted() {
     this.query();
@@ -65,7 +65,7 @@ export default {
     async query() {
       try {
         let res = await list();
-        if (res.data.code !== 0) {
+        if (res.data.code > 0) {
           this.$message({
             type: 'error',
             message: '获取数据失败：' + res.data.msg
@@ -80,7 +80,7 @@ export default {
         });
       }
     },
-    create(row) {
+    add(row) {
       this.form = {
         id: 0,
         parent_id: row.id,
@@ -88,7 +88,7 @@ export default {
       };
       this.showDialog = true;
     },
-    update(row) {
+    edit(row) {
       this.form = {
         id: row.id,
         parent_id: row.parent_id,
@@ -97,11 +97,11 @@ export default {
       this.showDialog = true;
     },
     remove(row) {
-      this.$confirm('是否确认删除？', '系统提示', {})
+      this.$confirm('是否确认删除？')
         .then(async () => {
           try {
             let res = await remove(row.id);
-            if (res.data.code !== 0) {
+            if (res.data.code > 0) {
               this.$message({
                 type: 'error',
                 message: '操作失败：' + res.data.msg
@@ -137,7 +137,7 @@ export default {
         } else {
           res = await edit(this.form);
         }
-        if (res.data.code !== 0) {
+        if (res.data.code > 0) {
           this.$message({
             type: 'error',
             message: '操作失败：' + res.data.msg

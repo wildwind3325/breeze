@@ -17,9 +17,17 @@ const routes = [{
     name: 'Home',
     component: Home
   }, {
-    path: '/orgnization',
+    path: '/system/orgnization',
     name: 'Orgnization',
     component: () => import('../views/system/Orgnization.vue')
+  }, {
+    path: '/system/station',
+    name: 'Station',
+    component: () => import('../views/system/Station.vue')
+  }, {
+    path: '/system/configuration',
+    name: 'Configuration',
+    component: () => import('../views/system/Configuration.vue')
   }]
 }, {
   path: '/:pathMatch(.*)',
