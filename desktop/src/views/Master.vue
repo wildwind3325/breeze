@@ -39,6 +39,12 @@
               </el-icon>
               <span>配置管理</span>
             </el-menu-item>
+            <el-menu-item index="/system/i18n">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>国际化管理</span>
+            </el-menu-item>
           </el-sub-menu>
         </el-menu>
       </el-scrollbar>

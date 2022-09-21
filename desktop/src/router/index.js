@@ -28,6 +28,10 @@ const routes = [{
     path: '/system/configuration',
     name: 'Configuration',
     component: () => import('../views/system/Configuration.vue')
+  }, {
+    path: '/system/i18n',
+    name: 'I18n',
+    component: () => import('../views/system/I18n.vue')
   }]
 }, {
   path: '/:pathMatch(.*)',

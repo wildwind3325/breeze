@@ -31,11 +31,15 @@ export const removeGroup = id => {
   });
 };
 
-export const list = group_id => {
+export const list = (group_id, keyword) => {
   return request({
     method: 'POST',
     url: '/api/common?_module=system.configuration&_action=list',
-    data: { group_id: group_id }
+    data: {
+      group_id: group_id,
+      keyword: keyword
+    },
+    headers: { 'Spin': 'false' }
   });
 };
 

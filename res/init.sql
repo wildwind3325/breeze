@@ -35,7 +35,7 @@ CREATE TABLE `base_config` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `base_config` (
 
 LOCK TABLES `base_config` WRITE;
 /*!40000 ALTER TABLE `base_config` DISABLE KEYS */;
+INSERT INTO `base_config` VALUES (1,1,'SYSTEM.THEME','系统风格','正常','','2022-09-21 11:57:37','administrator','2022-09-21 11:57:37','administrator'),(3,1,'SYSTEM.CODE','系统代码','007','','2022-09-21 12:01:07','administrator','2022-09-21 13:58:31','administrator'),(5,2,'USER.CODE','用户代码','007','','2022-09-21 14:39:20','administrator','2022-09-21 14:39:20','administrator');
 /*!40000 ALTER TABLE `base_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +64,7 @@ CREATE TABLE `base_config_group` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +93,7 @@ CREATE TABLE `base_department` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,9 +115,7 @@ DROP TABLE IF EXISTS `base_i18n`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `base_i18n` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
-  `label` varchar(64) COLLATE utf8mb4_bin NOT NULL,
   `text_en` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `text_zh` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -125,7 +124,7 @@ CREATE TABLE `base_i18n` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,35 +133,8 @@ CREATE TABLE `base_i18n` (
 
 LOCK TABLES `base_i18n` WRITE;
 /*!40000 ALTER TABLE `base_i18n` DISABLE KEYS */;
+INSERT INTO `base_i18n` VALUES (1,'system.ok','OK','确认','2022-09-21 16:49:37','administrator','2022-09-21 16:49:49','administrator'),(2,'system.cancel','Cancel','取消','2022-09-21 17:06:06','administrator','2022-09-21 17:06:06','administrator'),(3,'user.hello.msg','Hello','你好','2022-09-21 17:06:39','administrator','2022-09-21 19:12:10','administrator');
 /*!40000 ALTER TABLE `base_i18n` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `base_i18n_module`
---
-
-DROP TABLE IF EXISTS `base_i18n_module`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `base_i18n_module` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `base_i18n_module`
---
-
-LOCK TABLES `base_i18n_module` WRITE;
-/*!40000 ALTER TABLE `base_i18n_module` DISABLE KEYS */;
-/*!40000 ALTER TABLE `base_i18n_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -330,7 +302,7 @@ CREATE TABLE `base_station` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-19 19:41:10
+-- Dump completed on 2022-09-21 19:14:19
