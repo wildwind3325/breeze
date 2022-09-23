@@ -10,7 +10,7 @@
           @select="selectMenu">
           <el-menu-item index="/home">
             <el-icon>
-              <Star />
+              <HomeFilled />
             </el-icon>
             <span>首頁</span>
           </el-menu-item>
@@ -25,13 +25,25 @@
               <el-icon>
                 <Setting />
               </el-icon>
-              <span>部门管理</span>
+              <span>组织管理</span>
             </el-menu-item>
             <el-menu-item index="/system/station">
               <el-icon>
                 <Setting />
               </el-icon>
               <span>岗位管理</span>
+            </el-menu-item>
+            <el-menu-item index="/system/menu">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>菜单管理</span>
+            </el-menu-item>
+            <el-menu-item index="/system/dictionary">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>字典管理</span>
             </el-menu-item>
             <el-menu-item index="/system/configuration">
               <el-icon>
@@ -44,6 +56,12 @@
                 <Setting />
               </el-icon>
               <span>国际化管理</span>
+            </el-menu-item>
+            <el-menu-item index="/system/log">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>日志查询</span>
             </el-menu-item>
           </el-sub-menu>
         </el-menu>

@@ -244,7 +244,7 @@ class DB {
   /**
    * 执行分页查询操作
    * @param {QueryOption} options 配置数据
-   * @returns {Promise<Array>} 查询结果数组
+   * @returns {Promise<any>} 查询结果数组
    */
   async findByPage(options) {
     let sql = 'SELECT COUNT(*) AS total FROM ' + this.sep + options.table + this.sep + ' ' + options.where;

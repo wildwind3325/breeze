@@ -3,7 +3,7 @@ import request from '../../util/request';
 export const list = (keyword, pageNumber) => {
   return request({
     method: 'POST',
-    url: '/api/common?_module=system.i18n&_action=list',
+    url: '/api/common?_module=system.dictionary&_action=list',
     data: {
       keyword: keyword,
       pageSize: 8,
@@ -15,7 +15,7 @@ export const list = (keyword, pageNumber) => {
 export const add = form => {
   return request({
     method: 'POST',
-    url: '/api/common?_module=system.i18n&_action=add',
+    url: '/api/common?_module=system.dictionary&_action=add',
     data: form
   });
 };
@@ -23,7 +23,7 @@ export const add = form => {
 export const edit = form => {
   return request({
     method: 'POST',
-    url: '/api/common?_module=system.i18n&_action=edit',
+    url: '/api/common?_module=system.dictionary&_action=edit',
     data: form
   });
 };
@@ -31,7 +31,7 @@ export const edit = form => {
 export const remove = id => {
   return request({
     method: 'POST',
-    url: '/api/common?_module=system.i18n&_action=remove',
+    url: '/api/common?_module=system.dictionary&_action=remove',
     data: { id: id }
   });
 };

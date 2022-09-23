@@ -51,7 +51,7 @@ process.on('unhandledRejection', (error, promise) => {
 });
 
 process.on('uncaughtException', (error, origin) => {
-  console.error('unhandledRejection', error);
+  console.error('uncaughtException', error);
 });
 
 module.exports = { app: app, server: server };

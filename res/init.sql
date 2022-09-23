@@ -93,7 +93,7 @@ CREATE TABLE `base_department` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `base_department` (
 
 LOCK TABLES `base_department` WRITE;
 /*!40000 ALTER TABLE `base_department` DISABLE KEYS */;
-INSERT INTO `base_department` VALUES (1,0,'公司','2022-09-15 13:58:31','administrator','2022-09-15 19:09:04','administrator'),(2,1,'数字化信息部','2022-09-15 19:06:51','administrator','2022-09-15 19:07:48','administrator'),(3,2,'系统开发组','2022-09-15 19:07:26','administrator','2022-09-15 19:07:26','administrator'),(4,2,'数字化信息运营组','2022-09-15 19:10:05','administrator','2022-09-15 19:10:05','administrator'),(5,2,'数字化信息业务组','2022-09-15 19:11:04','administrator','2022-09-15 19:11:04','administrator');
+INSERT INTO `base_department` VALUES (1,0,'公司','2022-09-15 13:58:31','administrator','2022-09-15 19:09:04','administrator'),(2,1,'数字化信息部','2022-09-15 19:06:51','administrator','2022-09-15 19:07:48','administrator'),(3,2,'系统开发组','2022-09-15 19:07:26','administrator','2022-09-23 14:44:24','administrator'),(4,2,'数字化信息运营组','2022-09-15 19:10:05','administrator','2022-09-15 19:10:05','administrator'),(5,2,'数字化信息业务组','2022-09-15 19:11:04','administrator','2022-09-15 19:11:04','administrator');
 /*!40000 ALTER TABLE `base_department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +124,7 @@ CREATE TABLE `base_i18n` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,6 @@ DROP TABLE IF EXISTS `base_lov`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `base_lov` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
   `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
   `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `value` mediumtext COLLATE utf8mb4_bin NOT NULL,
@@ -185,7 +184,7 @@ CREATE TABLE `base_lov` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,35 +193,8 @@ CREATE TABLE `base_lov` (
 
 LOCK TABLES `base_lov` WRITE;
 /*!40000 ALTER TABLE `base_lov` DISABLE KEYS */;
+INSERT INTO `base_lov` VALUES (1,'SYSTEM.GENDER','性别','[\n  {\n    \"label\": \"男\",\n    \"value\": \"M\"\n  },\n  {\n    \"label\": \"女\",\n    \"value\": \"F\"\n  },\n  {\n    \"label\": \"未知\",\n    \"value\": \"U\"\n  }\n]','','2022-09-22 17:01:50','administrator','2022-09-22 17:46:14','administrator');
 /*!40000 ALTER TABLE `base_lov` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `base_lov_group`
---
-
-DROP TABLE IF EXISTS `base_lov_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `base_lov_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `base_lov_group`
---
-
-LOCK TABLES `base_lov_group` WRITE;
-/*!40000 ALTER TABLE `base_lov_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `base_lov_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -239,15 +211,13 @@ CREATE TABLE `base_menu` (
   `type` int(11) NOT NULL COMMENT '0 菜单 1 权限',
   `route` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `icon` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `code` varchar(64) COLLATE utf8mb4_bin NOT NULL,
-  `order` int(11) NOT NULL,
-  `visible` int(11) NOT NULL,
+  `code` varchar(512) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,6 +226,7 @@ CREATE TABLE `base_menu` (
 
 LOCK TABLES `base_menu` WRITE;
 /*!40000 ALTER TABLE `base_menu` DISABLE KEYS */;
+INSERT INTO `base_menu` VALUES (1,0,'系统管理',0,'/system','Setting','','2022-09-23 17:28:08','administrator','2022-09-23 17:42:13','administrator'),(4,1,'组织管理',0,'/system/orgnization','Grape','','2022-09-23 17:34:26','administrator','2022-09-23 17:34:26','administrator'),(5,1,'岗位管理',0,'/system/menu','Place','','2022-09-23 17:50:09','administrator','2022-09-23 17:50:09','administrator'),(6,1,'菜单管理',0,'/system/menu','Menu','','2022-09-23 17:50:41','administrator','2022-09-23 17:50:41','administrator'),(7,1,'字典管理',0,'/system/dictionary','Tickets','','2022-09-23 17:53:40','administrator','2022-09-23 17:53:40','administrator'),(8,1,'配置管理',0,'/system/configuration','Expand','','2022-09-23 17:54:30','administrator','2022-09-23 17:54:30','administrator'),(9,1,'国际化管理',0,'/system/i18n','InfoFilled','','2022-09-23 17:55:29','administrator','2022-09-23 17:56:58','administrator'),(10,1,'日志查询',0,'/system/log','Search','','2022-09-23 17:58:09','administrator','2022-09-23 17:58:09','administrator');
 /*!40000 ALTER TABLE `base_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-21 19:14:19
+-- Dump completed on 2022-09-23 17:59:17

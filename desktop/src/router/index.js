@@ -25,6 +25,14 @@ const routes = [{
     name: 'Station',
     component: () => import('../views/system/Station.vue')
   }, {
+    path: '/system/menu',
+    name: 'Menu',
+    component: () => import('../views/system/Menu.vue')
+  }, {
+    path: '/system/dictionary',
+    name: 'Dictionary',
+    component: () => import('../views/system/Dictionary.vue')
+  }, {
     path: '/system/configuration',
     name: 'Configuration',
     component: () => import('../views/system/Configuration.vue')
@@ -32,6 +40,10 @@ const routes = [{
     path: '/system/i18n',
     name: 'I18n',
     component: () => import('../views/system/I18n.vue')
+  }, {
+    path: '/system/log',
+    name: 'Log',
+    component: () => import('../views/system/Log.vue')
   }]
 }, {
   path: '/:pathMatch(.*)',

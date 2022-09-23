@@ -2,7 +2,6 @@
   <div class="toolbar">
     <div class="toolbar-function">
       <el-button type="success" icon="Plus" @click="add">新建</el-button>
-      <el-button type="warning" icon="Download" @click="download">导出</el-button>
     </div>
     <div class="toolbar-search">
       <el-input v-model="keyword" prefix-icon="Search" clearable placeholder="请输入关键字" style="width: 250px;" />
@@ -11,8 +10,8 @@
   </div>
   <el-table :data="list">
     <el-table-column prop="code" label="代码" />
-    <el-table-column prop="text_zh" label="中文" width="200" />
-    <el-table-column prop="text_en" label="英文" width="200" />
+    <el-table-column prop="label" label="名称" width="180" />
+    <el-table-column prop="memo" label="备注" width="250" />
     <el-table-column prop="created_at" label="创建时间" width="180" align="center">
       <template #default="scope">
         <span>{{ new Date(scope.row.created_at).format('yyyy-MM-dd HH:mm:ss') }}</span>
@@ -29,16 +28,19 @@
   </el-table>
   <el-pagination v-model:current-page="pageNumber" background layout="->, prev, pager, next" :total="total"
     style="margin-top: 10px;" @current-change="query" />
-  <el-dialog v-model="showDialog" title="国际化管理">
+  <el-dialog v-model="showDialog" title="字典管理">
     <el-form :model="form" :label-width="80">
       <el-form-item label="代码">
         <el-input v-model="form.code" />
       </el-form-item>
-      <el-form-item label="中文">
-        <el-input v-model="form.text_zh" />
+      <el-form-item label="名称">
+        <el-input v-model="form.label" />
       </el-form-item>
-      <el-form-item label="英文">
-        <el-input v-model="form.text_en" />
+      <el-form-item label="值">
+        <JsonEditorVue v-model="form.value" mode="text" style="width: 100%; height: 150px;" />
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input v-model="form.memo" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -49,9 +51,9 @@
 </template>
 
 <script>
-import { list, add, edit, remove } from '../../api/system/i18n';
+import { list, add, edit, remove } from '../../api/system/dictionary';
 export default {
-  name: 'I18n',
+  name: 'Dictionary',
   data() {
     return {
       keyword: '',
@@ -62,8 +64,9 @@ export default {
       form: {
         id: 0,
         code: '',
-        text_en: '',
-        text_zh: ''
+        label: '',
+        value: '[]',
+        memo: ''
       },
       currentRow: null
     };
@@ -96,8 +99,9 @@ export default {
       this.form = {
         id: 0,
         code: '',
-        text_en: '',
-        text_zh: ''
+        label: '',
+        value: '[]',
+        memo: ''
       };
       this.showDialog = true;
     },
@@ -105,8 +109,9 @@ export default {
       this.form = {
         id: row.id,
         code: row.code,
-        text_en: row.text_en,
-        text_zh: row.text_zh
+        label: row.label,
+        value: row.value,
+        memo: row.memo
       };
       this.currentRow = row;
       this.showDialog = true;
@@ -138,7 +143,7 @@ export default {
         .catch(() => { });
     },
     async save() {
-      if (!this.form.code || !this.form.text_en || !this.form.text_zh) {
+      if (!this.form.code || !this.form.label || !this.form.value) {
         this.$message({
           type: 'warning',
           message: '请将信息填写完整'
@@ -162,8 +167,9 @@ export default {
             this.list.push(res.data.data);
           } else {
             this.currentRow.code = this.form.code;
-            this.currentRow.text_en = this.form.text_en;
-            this.currentRow.text_zh = this.form.text_zh;
+            this.currentRow.label = this.form.label;
+            this.currentRow.value = this.form.value;
+            this.currentRow.memo = this.form.memo;
           }
           this.currentRow = null;
           this.showDialog = false;
@@ -178,9 +184,6 @@ export default {
           message: '操作失败：' + err.message
         });
       }
-    },
-    download() {
-      window.open('/api/download?_module=system.i18n&_action=download');
     }
   }
 }

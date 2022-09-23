@@ -14,8 +14,8 @@
     <el-table-column label="操作" width="120" align="center">
       <template #default="scope">
         <el-button-group>
-          <el-button type="warning" icon="Edit" @click="edit(scope.row)" />
-          <el-button type="danger" icon="Delete" @click="remove(scope.row, scope.$index)" />
+          <el-button type="warning" icon="Edit" size="small" @click="edit(scope.row)" />
+          <el-button type="danger" icon="Delete" size="small" @click="remove(scope.row, scope.$index)" />
         </el-button-group>
       </template>
     </el-table-column>

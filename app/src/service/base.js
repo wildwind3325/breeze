@@ -27,8 +27,8 @@ class BaseService {
     try {
       controller = require('../controller/' + module);
       method = controller[action];
-      if (!method) throw new Error('No such method');
-    } catch (err) {
+    } catch (err) { }
+    if (!method || !method instanceof Function) {
       return {
         code: 1,
         msg: '请求的模块或方法不存在'
@@ -65,6 +65,13 @@ class BaseService {
       content: content,
       created_by: operator
     });
+  }
+
+  async getConfig(code) {
+    let db = new DB();
+    let list = await db.find('select `value` from `base_config` where `code` = :code', { code: code });
+    if (list.length > 0) return list[0].value;
+    return null;
   }
 }
 
