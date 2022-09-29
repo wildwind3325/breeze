@@ -29,6 +29,14 @@ const routes = [{
     name: 'Menu',
     component: () => import('../views/system/Menu.vue')
   }, {
+    path: '/system/role',
+    name: 'Role',
+    component: () => import('../views/system/Role.vue')
+  }, {
+    path: '/system/user',
+    name: 'User',
+    component: () => import('../views/system/User.vue')
+  }, {
     path: '/system/dictionary',
     name: 'Dictionary',
     component: () => import('../views/system/Dictionary.vue')

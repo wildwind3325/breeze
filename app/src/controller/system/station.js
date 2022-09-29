@@ -50,7 +50,7 @@ class StationController {
 
   async remove(req, res, data) {
     let db = new DB();
-    let count = await db.find('select count(*) total from `base_user_org` where `station_id` = :id', { id: data.id });
+    let count = await db.find('select count(*) total from `base_user` where `station_id` = :id', { id: data.id });
     if (count[0].total > 0) {
       res.send({
         code: 1,

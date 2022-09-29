@@ -1,5 +1,7 @@
 var DB = require('../../dao/db');
 
+var baseService = require('../../service/base');
+
 class MenuController {
   constructor() {
     this.rules = {
@@ -32,26 +34,12 @@ class MenuController {
     let tree = await db.find('select * from `base_menu` where `parent_id` = 0');
     let list = await db.find('select * from `base_menu` where `parent_id` <> 0');
     for (let i = 0; i < tree.length; i++) {
-      this.getMenu(list, tree[i]);
+      baseService.getTree(list, tree[i]);
     }
     res.send({
       code: 0,
       data: tree
     });
-  }
-
-  getMenu(list, item) {
-    item.children = [];
-    for (let i = list.length - 1; i >= 0; i--) {
-      if (list[i].parent_id === item.id) {
-        item.children.push(list[i]);
-        list.splice(i, 1);
-      }
-    }
-    item.children.reverse();
-    for (let i = 0; i < item.children.length; i++) {
-      this.getMenu(list, item.children[i]);
-    }
   }
 
   async add(req, res, data) {
@@ -80,6 +68,16 @@ class MenuController {
         msg: '该对象不为空，无法直接删除。'
       });
       return;
+    }
+    let roles = await db.find('select * from `base_role`');
+    for (let i = 0; i < roles.length; i++) {
+      let menus = JSON.parse(roles[i].menus);
+      let pos = menus.indexOf(data.id);
+      if (pos >= 0) {
+        menus.splice(pos, 1);
+        roles[i].menus = JSON.stringify(menus);
+        await db.update('base_role', roles[i]);
+      }
     }
     await db.delete('base_menu', data.id);
     res.send({ code: 0 });

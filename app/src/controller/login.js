@@ -18,22 +18,22 @@ class LoginController {
     let account = data.account;
     let password = data.password;
     let db = new DB();
-    let rows = await db.find('select * from `base_user` where `status` = 0 and `account` = :account', {
+    let list = await db.find('select * from `base_user` where `status` = 0 and `account` = :account', {
       account: account
     });
-    if (rows.length === 0) {
+    if (list.length === 0) {
       res.send({
         code: 1,
         msg: '该用户不存在或已被停用'
       });
     } else {
-      if (rows[0].password !== util.md5(password + account)) {
+      if (list[0].password !== util.md5(password + account)) {
         res.send({
           code: 1,
           msg: '密码错误'
         });
       } else {
-        req.session.user = rows[0];
+        req.session.user = list[0];
         res.send({ code: 0 });
       }
     }

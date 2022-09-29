@@ -11,8 +11,8 @@
   </div>
   <el-table :data="list">
     <el-table-column prop="code" label="代码" />
-    <el-table-column prop="text_zh" label="中文" width="200" />
-    <el-table-column prop="text_en" label="英文" width="200" />
+    <el-table-column prop="text_zh" label="中文" width="250" />
+    <el-table-column prop="text_en" label="英文" width="250" />
     <el-table-column prop="created_at" label="创建时间" width="180" align="center">
       <template #default="scope">
         <span>{{ new Date(scope.row.created_at).format('yyyy-MM-dd HH:mm:ss') }}</span>

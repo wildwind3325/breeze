@@ -39,6 +39,18 @@
               </el-icon>
               <span>菜单管理</span>
             </el-menu-item>
+            <el-menu-item index="/system/role">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>角色管理</span>
+            </el-menu-item>
+            <el-menu-item index="/system/user">
+              <el-icon>
+                <Setting />
+              </el-icon>
+              <span>用户管理</span>
+            </el-menu-item>
             <el-menu-item index="/system/dictionary">
               <el-icon>
                 <Setting />
@@ -69,7 +81,6 @@
     </div>
     <div style="flex-grow: 1;">
       <div class="header">
-        <el-button type="primary">管理员</el-button>
         <el-button type="warning" @click="logout">注销</el-button>
       </div>
       <div class="navibar">

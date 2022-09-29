@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       locale: localStorage.getItem('lang') || 'zh',
-      account: 'administrator',
+      account: localStorage.getItem('account') || '',
       password: ''
     };
   },
@@ -68,6 +68,7 @@ export default {
         }
         let target = localStorage.getItem('target_uri') || '/home';
         localStorage.removeItem('target_uri');
+        localStorage.setItem('account', this.account);
         this.$router.replace(target);
       } catch (err) {
         this.$message({

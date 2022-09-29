@@ -3,15 +3,9 @@
     <div class="toolbar-function">
       <el-button type="success" icon="Plus" @click="add">新建</el-button>
     </div>
-    <div class="toolbar-search">
-      <el-input v-model="keyword" prefix-icon="Search" clearable placeholder="请输入关键字" style="width: 250px;" />
-      <el-button type="primary" style="margin-left: 12px;" @click="query(1)">搜索</el-button>
-    </div>
   </div>
   <el-table :data="list">
-    <el-table-column prop="code" label="代码" />
-    <el-table-column prop="label" label="名称" width="180" />
-    <el-table-column prop="memo" label="备注" width="250" />
+    <el-table-column prop="label" label="名称" />
     <el-table-column prop="created_at" label="创建时间" width="180" align="center">
       <template #default="scope">
         <span>{{ new Date(scope.row.created_at).format('yyyy-MM-dd HH:mm:ss') }}</span>
@@ -26,67 +20,60 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-pagination v-model:current-page="pageNumber" background layout="->, prev, pager, next" :total="total"
-    style="margin-top: 10px;" @current-change="query" />
-  <el-dialog v-model="showDialog" title="字典管理" top="5vh">
-    <el-form :model="form" :label-width="80">
-      <el-form-item label="代码">
-        <el-input v-model="form.code" />
-      </el-form-item>
+  <el-drawer v-model="showDrawer" title="角色管理" size="60%">
+    <el-form :label-width="80">
       <el-form-item label="名称">
         <el-input v-model="form.label" />
       </el-form-item>
-      <el-form-item label="值">
-        <JsonEditorVue v-model="form.value" mode="text" style="width: 100%; height: 150px;" />
-      </el-form-item>
-      <el-form-item label="备注">
-        <el-input v-model="form.memo" />
+      <el-form-item label="权限">
+        <el-tree ref="roleTreeRef" :data="menus" node-key="id" show-checkbox check-strictly />
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="showDialog = false">取消</el-button>
-      <el-button type="primary" @click="save">确认</el-button>
+      <div>
+        <el-button @click="showDrawer = false">取消</el-button>
+        <el-button type="primary" @click="save">确定</el-button>
+      </div>
     </template>
-  </el-dialog>
+  </el-drawer>
 </template>
 
 <script>
-import { list, add, edit, remove } from '../../api/system/dictionary';
+import * as role from '../../api/system/role';
+import { list } from '../../api/system/menu';
 export default {
-  name: 'Dictionary',
+  name: 'Role',
   data() {
     return {
-      keyword: '',
       list: [],
-      pageNumber: 1,
-      total: 0,
-      showDialog: false,
+      showDrawer: false,
       form: {
         id: 0,
-        code: '',
         label: '',
-        value: '[]',
-        memo: ''
+        menus: '[]'
       },
-      currentRow: null
+      currentRow: null,
+      menus: []
     };
   },
   mounted() {
     this.query();
   },
   methods: {
-    async query(pageNumber) {
+    async query() {
       try {
-        let res = await list(this.keyword, pageNumber || this.pageNumber);
+        let res = await list();
+        if (res.data.code === 0) {
+          this.menus = res.data.data;
+        }
+        res = await role.list();
         if (res.data.code !== 0) {
           this.$message({
             type: 'error',
             message: '获取数据失败：' + res.data.msg
           });
         } else {
-          this.total = res.data.data.total;
-          this.pageNumber = res.data.data.pageNumber;
-          this.list = res.data.data.rows;
+          this.list = res.data.data;
         }
       } catch (err) {
         this.$message({
@@ -98,29 +85,31 @@ export default {
     add() {
       this.form = {
         id: 0,
-        code: '',
         label: '',
-        value: '[]',
-        memo: ''
+        menus: '[]'
       };
-      this.showDialog = true;
+      this.showDrawer = true;
+      this.$nextTick(() => {
+        this.$refs.roleTreeRef.setCheckedKeys([], false);
+      });
     },
     edit(row) {
       this.form = {
         id: row.id,
-        code: row.code,
         label: row.label,
-        value: row.value,
-        memo: row.memo
+        menus: row.menus
       };
       this.currentRow = row;
-      this.showDialog = true;
+      this.showDrawer = true;
+      this.$nextTick(() => {
+        this.$refs.roleTreeRef.setCheckedKeys(JSON.parse(row.menus), false);
+      });
     },
     remove(row, index) {
       this.$confirm('是否确认删除？', '系统提示')
         .then(async () => {
           try {
-            let res = await remove(row.id);
+            let res = await role.remove(row.id);
             if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
@@ -143,7 +132,7 @@ export default {
         .catch(() => { });
     },
     async save() {
-      if (!this.form.code || !this.form.label || !this.form.value) {
+      if (!this.form.label) {
         this.$message({
           type: 'warning',
           message: '请将信息填写完整'
@@ -152,10 +141,19 @@ export default {
       }
       try {
         let res;
+        this.form.menus = JSON.stringify(this.$refs.roleTreeRef.getCheckedKeys(false));
         if (this.form.id === 0) {
-          res = await add(this.form);
+          res = await role.add({
+            id: this.form.id,
+            label: this.form.label,
+            menus: this.form.menus
+          });
         } else {
-          res = await edit(this.form);
+          res = await role.edit({
+            id: this.form.id,
+            label: this.form.label,
+            menus: this.form.menus
+          });
         }
         if (res.data.code !== 0) {
           this.$message({
@@ -166,13 +164,11 @@ export default {
           if (this.form.id === 0) {
             this.list.push(res.data.data);
           } else {
-            this.currentRow.code = this.form.code;
             this.currentRow.label = this.form.label;
-            this.currentRow.value = this.form.value;
-            this.currentRow.memo = this.form.memo;
+            this.currentRow.menus = this.form.menus;
           }
           this.currentRow = null;
-          this.showDialog = false;
+          this.showDrawer = false;
           this.$message({
             type: 'success',
             message: '操作成功'

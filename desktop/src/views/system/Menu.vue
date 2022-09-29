@@ -38,7 +38,8 @@
   <el-dialog v-model="showDialog" title="菜单管理">
     <el-form :model="form" :label-width="80">
       <el-form-item label="上级菜单">
-        <el-tree-select v-model="form.parent_id" :data="list" clearable check-strictly value-key="id" />
+        <el-tree-select v-model="form.parent_id" :data="list" clearable check-strictly value-key="id"
+          :disabled="form.id > 0" />
       </el-form-item>
       <el-form-item label="图标">
         <el-popover title="所有图标" :width="600" trigger="click" v-model:visible="showIcons">
@@ -142,7 +143,7 @@ export default {
     edit(row) {
       this.form = {
         id: row.id,
-        parent_id: row.parent_id,
+        parent_id: row.parent_id === 0 ? null : row.parent_id,
         label: row.label,
         type: row.type,
         route: row.route,
@@ -178,17 +179,18 @@ export default {
         .catch(() => { });
     },
     async save() {
-      if (!this.form.parent_id) this.form.parent_id = 0;
-      if (!this.form.label) {
+      let form = JSON.parse(JSON.stringify(this.form));
+      if (!form.parent_id) form.parent_id = 0;
+      if (!form.label) {
         this.$message({
           type: 'warning',
           message: '请将信息填写完整'
         });
         return;
       }
-      if (this.form.type === 0) {
-        this.form.code = '';
-        if (!this.form.route) {
+      if (form.type === 0) {
+        form.code = '';
+        if (!form.route) {
           this.$message({
             type: 'warning',
             message: '菜单必须提供路由地址'
@@ -196,8 +198,8 @@ export default {
           return;
         }
       } else {
-        this.form.route = '';
-        if (!this.form.code) {
+        form.route = '';
+        if (!form.code) {
           this.$message({
             type: 'warning',
             message: '功能必须提供代码'
@@ -205,7 +207,7 @@ export default {
           return;
         }
       }
-      if (this.form.id == this.form.parent_id && this.form.id !== 0) {
+      if (form.id == form.parent_id && form.id !== 0) {
         this.$message({
           type: 'warning',
           message: '上级不可以设置为自身'
@@ -214,10 +216,10 @@ export default {
       }
       try {
         let res;
-        if (this.form.id === 0) {
-          res = await add(this.form);
+        if (form.id === 0) {
+          res = await add(form);
         } else {
-          res = await edit(this.form);
+          res = await edit(form);
         }
         if (res.data.code !== 0) {
           this.$message({

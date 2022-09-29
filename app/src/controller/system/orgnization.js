@@ -1,5 +1,7 @@
 var DB = require('../../dao/db');
 
+var baseService = require('../../service/base');
+
 class OrgnizationController {
   constructor() {
     this.rules = {
@@ -24,26 +26,12 @@ class OrgnizationController {
     let tree = await db.find('select * from `base_department` where `parent_id` = 0 limit 1');
     if (tree.length > 0) {
       let list = await db.find('select * from `base_department` where `parent_id` <> 0');
-      this.getOrgnization(list, tree[0]);
+      baseService.getTree(list, tree[0]);
     }
     res.send({
       code: 0,
       data: tree
     });
-  }
-
-  getOrgnization(list, item) {
-    item.children = [];
-    for (let i = list.length - 1; i >= 0; i--) {
-      if (list[i].parent_id === item.id) {
-        item.children.push(list[i]);
-        list.splice(i, 1);
-      }
-    }
-    item.children.reverse();
-    for (let i = 0; i < item.children.length; i++) {
-      this.getOrgnization(list, item.children[i]);
-    }
   }
 
   async add(req, res, data) {
@@ -74,7 +62,7 @@ class OrgnizationController {
       return;
     }
     let countSub = await db.find('select count(*) total from `base_department` where `parent_id` = :id', { id: data.id });
-    let countUser = await db.find('select count(*) total from `base_user_org` where `department_id` = :id', { id: data.id });
+    let countUser = await db.find('select count(*) total from `base_user` where `department_id` = :id', { id: data.id });
     if (countSub[0].total > 0 || countUser[0].total > 0) {
       res.send({
         code: 1,
