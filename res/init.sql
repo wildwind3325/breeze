@@ -35,7 +35,7 @@ CREATE TABLE `base_config` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,6 @@ CREATE TABLE `base_config` (
 
 LOCK TABLES `base_config` WRITE;
 /*!40000 ALTER TABLE `base_config` DISABLE KEYS */;
-INSERT INTO `base_config` VALUES (1,1,'SYSTEM.THEME','系统风格','正常','','2022-09-21 11:57:37','administrator','2022-09-21 11:57:37','administrator'),(3,1,'SYSTEM.CODE','系统代码','007','','2022-09-21 12:01:07','administrator','2022-09-21 13:58:31','administrator'),(5,2,'USER.CODE','用户代码','007','','2022-09-21 14:39:20','administrator','2022-09-21 14:39:20','administrator');
 /*!40000 ALTER TABLE `base_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +123,7 @@ CREATE TABLE `base_i18n` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +132,6 @@ CREATE TABLE `base_i18n` (
 
 LOCK TABLES `base_i18n` WRITE;
 /*!40000 ALTER TABLE `base_i18n` DISABLE KEYS */;
-INSERT INTO `base_i18n` VALUES (1,'system.ok','OK','确认','2022-09-21 16:49:37','administrator','2022-09-21 16:49:49','administrator'),(2,'system.cancel','Cancel','取消','2022-09-21 17:06:06','administrator','2022-09-21 17:06:06','administrator'),(3,'user.hello.msg','Hello','你好','2022-09-21 17:06:39','administrator','2022-09-21 19:12:10','administrator');
 /*!40000 ALTER TABLE `base_i18n` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +150,7 @@ CREATE TABLE `base_log` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +159,6 @@ CREATE TABLE `base_log` (
 
 LOCK TABLES `base_log` WRITE;
 /*!40000 ALTER TABLE `base_log` DISABLE KEYS */;
-INSERT INTO `base_log` VALUES (1,'service.base','ERROR','空指针错误','2022-09-09 11:52:08','zhangjun01');
 /*!40000 ALTER TABLE `base_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +181,7 @@ CREATE TABLE `base_lov` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +190,6 @@ CREATE TABLE `base_lov` (
 
 LOCK TABLES `base_lov` WRITE;
 /*!40000 ALTER TABLE `base_lov` DISABLE KEYS */;
-INSERT INTO `base_lov` VALUES (1,'SYSTEM.GENDER','性别','[\n  {\n    \"label\": \"男\",\n    \"value\": \"M\"\n  },\n  {\n    \"label\": \"女\",\n    \"value\": \"F\"\n  },\n  {\n    \"label\": \"未知\",\n    \"value\": \"U\"\n  }\n]','','2022-09-22 17:01:50','administrator','2022-09-22 17:46:14','administrator');
 /*!40000 ALTER TABLE `base_lov` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +213,7 @@ CREATE TABLE `base_menu` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +222,7 @@ CREATE TABLE `base_menu` (
 
 LOCK TABLES `base_menu` WRITE;
 /*!40000 ALTER TABLE `base_menu` DISABLE KEYS */;
-INSERT INTO `base_menu` VALUES (1,0,'系统管理',0,'/system','Setting','','2022-09-23 17:28:08','administrator','2022-09-23 17:42:13','administrator'),(4,1,'组织管理',0,'/system/orgnization','Grape','','2022-09-23 17:34:26','administrator','2022-09-23 17:34:26','administrator'),(5,1,'岗位管理',0,'/system/menu','Place','','2022-09-23 17:50:09','administrator','2022-09-23 17:50:09','administrator'),(6,1,'菜单管理',0,'/system/menu','Menu','','2022-09-23 17:50:41','administrator','2022-09-23 17:50:41','administrator'),(7,1,'字典管理',0,'/system/dictionary','Tickets','','2022-09-23 17:53:40','administrator','2022-09-23 17:53:40','administrator'),(8,1,'配置管理',0,'/system/configuration','Expand','','2022-09-23 17:54:30','administrator','2022-09-23 17:54:30','administrator'),(9,1,'国际化管理',0,'/system/i18n','InfoFilled','','2022-09-23 17:55:29','administrator','2022-09-23 17:56:58','administrator'),(10,1,'日志查询',0,'/system/log','Search','','2022-09-23 17:58:09','administrator','2022-09-23 17:58:09','administrator');
+INSERT INTO `base_menu` VALUES (4,0,'111',0,'/111','AddLocation','','2022-09-29 19:28:41','admin','2022-09-29 19:28:41','admin'),(5,4,'a',1,'','AddLocation','a','2022-09-29 19:28:51','admin','2022-09-29 19:28:51','admin'),(6,4,'b',1,'','Apple','b','2022-09-29 19:29:00','admin','2022-09-29 19:29:00','admin');
 /*!40000 ALTER TABLE `base_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,9 +239,11 @@ CREATE TABLE `base_role` (
   `menus` mediumtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,6 +252,7 @@ CREATE TABLE `base_role` (
 
 LOCK TABLES `base_role` WRITE;
 /*!40000 ALTER TABLE `base_role` DISABLE KEYS */;
+INSERT INTO `base_role` VALUES (3,'测试','[4,5,6]','2022-09-29 19:29:12','admin','2022-09-29 19:29:12','admin');
 /*!40000 ALTER TABLE `base_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +272,7 @@ CREATE TABLE `base_station` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +281,7 @@ CREATE TABLE `base_station` (
 
 LOCK TABLES `base_station` WRITE;
 /*!40000 ALTER TABLE `base_station` DISABLE KEYS */;
-INSERT INTO `base_station` VALUES (1,'CEO','2022-09-16 14:07:34','administrator','2022-09-16 14:07:34','administrator'),(2,'高级总监','2022-09-16 14:22:07','administrator','2022-09-16 14:22:07','administrator'),(3,'总监','2022-09-16 14:22:11','administrator','2022-09-16 14:27:34','administrator'),(4,'高级经理','2022-09-16 15:15:59','administrator','2022-09-16 15:15:59','administrator'),(5,'经理','2022-09-16 15:16:06','administrator','2022-09-16 15:16:06','administrator'),(6,'普通员工','2022-09-16 15:16:12','administrator','2022-09-19 19:27:04','administrator');
+INSERT INTO `base_station` VALUES (1,'CXO','2022-09-16 14:07:34','administrator','2022-09-29 15:51:59','admin'),(2,'高级总监','2022-09-16 14:22:07','administrator','2022-09-16 14:22:07','administrator'),(3,'总监','2022-09-16 14:22:11','administrator','2022-09-16 14:27:34','administrator'),(4,'高级经理','2022-09-16 15:15:59','administrator','2022-09-16 15:15:59','administrator'),(5,'经理','2022-09-16 15:16:06','administrator','2022-09-16 15:16:06','administrator'),(6,'普通员工','2022-09-16 15:16:12','administrator','2022-09-19 19:27:04','administrator'),(7,'一线员工','2022-09-29 15:52:13','admin','2022-09-29 15:52:13','admin');
 /*!40000 ALTER TABLE `base_station` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,10 +298,10 @@ CREATE TABLE `base_user` (
   `password` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `code` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `gender` varchar(32) COLLATE utf8mb4_bin NOT NULL COMMENT 'M F',
-  `birthday` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `email` varchar(64) COLLATE utf8mb4_bin NOT NULL,
   `mobile` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `station_id` int(11) NOT NULL,
   `roles` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `status` int(11) NOT NULL COMMENT '0 正常 1 停用',
   `is_admin` int(11) NOT NULL,
@@ -313,7 +312,7 @@ CREATE TABLE `base_user` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_UNIQUE` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,37 +321,52 @@ CREATE TABLE `base_user` (
 
 LOCK TABLES `base_user` WRITE;
 /*!40000 ALTER TABLE `base_user` DISABLE KEYS */;
-INSERT INTO `base_user` VALUES (2,'administrator','726d9408f446069b821235264f42ad5a','','系统管理员','','','','','[]',0,1,'','2022-09-09 13:04:03','SYSTEM','2022-09-09 13:04:03','SYSTEM');
+INSERT INTO `base_user` VALUES (3,'admin','eac4108912af90ae96e858190f4d8af7','','系统管理员','','',0,0,'[]',0,1,'','2022-09-29 15:45:05','SYSTEM','2022-09-29 16:55:59','admin'),(5,'zhangjun01','322867d50fd273441760a8f601b6b9b0','958','张俊','zhangjun01@hesaitech.com','13761019032',0,0,'[]',0,0,'','2022-09-29 17:39:18','admin','2022-09-29 17:39:18','admin');
 /*!40000 ALTER TABLE `base_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `base_user_org`
+-- Temporary view structure for view `view_base_user`
 --
 
-DROP TABLE IF EXISTS `base_user_org`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+DROP TABLE IF EXISTS `view_base_user`;
+/*!50001 DROP VIEW IF EXISTS `view_base_user`*/;
+SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `base_user_org` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `station_id` int(11) NOT NULL,
-  `is_main` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 CREATE VIEW `view_base_user` AS SELECT 
+ 1 AS `id`,
+ 1 AS `account`,
+ 1 AS `code`,
+ 1 AS `name`,
+ 1 AS `email`,
+ 1 AS `mobile`,
+ 1 AS `department_id`,
+ 1 AS `department_name`,
+ 1 AS `station_id`,
+ 1 AS `station_name`,
+ 1 AS `roles`,
+ 1 AS `status`,
+ 1 AS `is_admin`,
+ 1 AS `memo`*/;
+SET character_set_client = @saved_cs_client;
 
 --
--- Dumping data for table `base_user_org`
+-- Final view structure for view `view_base_user`
 --
 
-LOCK TABLES `base_user_org` WRITE;
-/*!40000 ALTER TABLE `base_user_org` DISABLE KEYS */;
-/*!40000 ALTER TABLE `base_user_org` ENABLE KEYS */;
-UNLOCK TABLES;
+/*!50001 DROP VIEW IF EXISTS `view_base_user`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY INVOKER */
+/*!50001 VIEW `view_base_user` AS select `base_user`.`id` AS `id`,`base_user`.`account` AS `account`,`base_user`.`code` AS `code`,`base_user`.`name` AS `name`,`base_user`.`email` AS `email`,`base_user`.`mobile` AS `mobile`,`base_user`.`department_id` AS `department_id`,`base_department`.`label` AS `department_name`,`base_user`.`station_id` AS `station_id`,`base_station`.`label` AS `station_name`,`base_user`.`roles` AS `roles`,`base_user`.`status` AS `status`,`base_user`.`is_admin` AS `is_admin`,`base_user`.`memo` AS `memo` from ((`base_user` left join `base_department` on((`base_user`.`department_id` = `base_department`.`id`))) left join `base_station` on((`base_user`.`station_id` = `base_station`.`id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -363,4 +377,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-23 17:59:17
+-- Dump completed on 2022-09-29 19:57:30
