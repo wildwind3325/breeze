@@ -1,5 +1,4 @@
 var DB = require('../dao/db');
-var baseService = require('./base');
 
 class SecurityService {
   constructor() {
@@ -14,7 +13,7 @@ class SecurityService {
     let tree = await db.find('select * from `base_menu` where `parent_id` = 0 and `type` = 0');
     let list = await db.find('select * from `base_menu` where `parent_id` <> 0 and `type` = 0');
     for (let i = 0; i < tree.length; i++) {
-      baseService.getTree(list, tree[i]);
+      require('./base').getTree(list, tree[i]);
     }
     this.menuTree = tree;
     let menus = await db.findByTable('base_menu', [], '', '', {});
@@ -42,6 +41,7 @@ class SecurityService {
   }
 
   hasPrivilege(user, code) {
+    if (this.privileges.indexOf(code) < 0) return true;
     for (let i = 0; i < user.roles.length; i++) {
       let role = this.roles[user.roles[i] + ''];
       if (!role) continue;

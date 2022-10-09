@@ -1,6 +1,5 @@
 var DB = require('../dao/db');
 var util = require('../util/util');
-var securityService = require('./security');
 
 class BaseService {
   constructor() {
@@ -17,7 +16,7 @@ class BaseService {
         msg: '请求不合法'
       };
     }
-    if (this.safeModules.indexOf(module) < 0 && !req.session.user) {
+    if (this.safeModules.indexOf(module) < 0) {
       if (!req.session.user) {
         return {
           code: -1,
@@ -25,7 +24,7 @@ class BaseService {
         };
       }
       if (req.session.user.is_admin === 0) {
-        if (!securityService.hasPrivilege(req.session.user, module + '.' + action)) {
+        if (!require('./security').hasPrivilege(req.session.user, module + '.' + action)) {
           return {
             code: 1,
             msg: '你没有权限进行此操作'

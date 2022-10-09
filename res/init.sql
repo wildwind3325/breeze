@@ -93,7 +93,7 @@ CREATE TABLE `base_department` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `base_menu` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE `base_menu` (
 
 LOCK TABLES `base_menu` WRITE;
 /*!40000 ALTER TABLE `base_menu` DISABLE KEYS */;
-INSERT INTO `base_menu` VALUES (1,0,'系统管理',0,'/system','Setting','','2022-10-09 11:23:45','admin','2022-10-09 11:23:45','admin'),(2,1,'组织管理',0,'/system/orgnization','HelpFilled','','2022-10-09 11:24:26','admin','2022-10-09 11:24:53','admin'),(3,1,'岗位管理',0,'/system/station','Place','','2022-10-09 11:25:45','admin','2022-10-09 11:25:45','admin'),(4,1,'菜单管理',0,'/system/menu','Menu','','2022-10-09 11:26:07','admin','2022-10-09 11:26:07','admin'),(5,1,'角色管理',0,'/system/role','MagicStick','','2022-10-09 11:27:17','admin','2022-10-09 11:27:17','admin'),(6,1,'用户管理',0,'/system/user','User','','2022-10-09 11:27:38','admin','2022-10-09 11:27:38','admin'),(7,1,'字典管理',0,'/system/dictionary','Notebook','','2022-10-09 11:27:54','admin','2022-10-09 11:27:54','admin'),(8,1,'配置管理',0,'/system/configuration','Tools','','2022-10-09 11:28:09','admin','2022-10-09 11:28:09','admin'),(9,1,'国际化',0,'/system/i18n','InfoFilled','','2022-10-09 11:28:33','admin','2022-10-09 11:28:33','admin'),(10,1,'日志查询',0,'/system/log','Search','','2022-10-09 11:29:04','admin','2022-10-09 11:29:19','admin');
+INSERT INTO `base_menu` VALUES (1,0,'系统管理',0,'/system','Setting','','2022-10-09 11:23:45','admin','2022-10-09 11:23:45','admin'),(2,1,'组织管理',0,'/system/orgnization','HelpFilled','','2022-10-09 11:24:26','admin','2022-10-09 11:24:53','admin'),(3,1,'岗位管理',0,'/system/station','Place','','2022-10-09 11:25:45','admin','2022-10-09 11:25:45','admin'),(4,1,'菜单管理',0,'/system/menu','Menu','','2022-10-09 11:26:07','admin','2022-10-09 11:26:07','admin'),(5,1,'角色管理',0,'/system/role','MagicStick','','2022-10-09 11:27:17','admin','2022-10-09 11:27:17','admin'),(6,1,'用户管理',0,'/system/user','User','','2022-10-09 11:27:38','admin','2022-10-09 11:27:38','admin'),(7,1,'字典管理',0,'/system/dictionary','Notebook','','2022-10-09 11:27:54','admin','2022-10-09 11:27:54','admin'),(8,1,'配置管理',0,'/system/configuration','Tools','','2022-10-09 11:28:09','admin','2022-10-09 11:28:09','admin'),(9,1,'国际化',0,'/system/i18n','InfoFilled','','2022-10-09 11:28:33','admin','2022-10-09 11:28:33','admin'),(10,1,'日志查询',0,'/system/log','Search','','2022-10-09 11:29:04','admin','2022-10-09 11:29:19','admin'),(11,2,'新建',1,'','','system.orgnization.add','2022-10-09 16:12:30','zhangjun01','2022-10-09 16:12:30','zhangjun01'),(12,2,'编辑',1,'','','system.orgnization.edit','2022-10-09 16:12:58','zhangjun01','2022-10-09 16:13:26','zhangjun01'),(13,2,'删除',1,'','','system.orgnization.remove','2022-10-09 16:13:06','zhangjun01','2022-10-09 16:13:33','zhangjun01');
 /*!40000 ALTER TABLE `base_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +253,7 @@ CREATE TABLE `base_role` (
 
 LOCK TABLES `base_role` WRITE;
 /*!40000 ALTER TABLE `base_role` DISABLE KEYS */;
-INSERT INTO `base_role` VALUES (5,'管理员','[1,2,3,4,5,6,7,8,9,10]','2022-10-09 11:29:46','admin','2022-10-09 11:29:46','admin'),(6,'普通用户','[]','2022-10-09 11:29:52','admin','2022-10-09 11:29:52','admin');
+INSERT INTO `base_role` VALUES (5,'管理员','[1,2,11,12,13,3,4,5,6,7,8,9,10]','2022-10-09 11:29:46','admin','2022-10-09 16:14:17','zhangjun01'),(6,'普通用户','[1,2,11,12]','2022-10-09 11:29:52','admin','2022-10-09 16:16:20','aaa');
 /*!40000 ALTER TABLE `base_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +313,7 @@ CREATE TABLE `base_user` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_UNIQUE` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +322,7 @@ CREATE TABLE `base_user` (
 
 LOCK TABLES `base_user` WRITE;
 /*!40000 ALTER TABLE `base_user` DISABLE KEYS */;
-INSERT INTO `base_user` VALUES (5,'zhangjun01','322867d50fd273441760a8f601b6b9b0','958','张俊','zhangjun01@hesaitech.com','13761019032',0,0,'[5]',0,1,'','2022-09-29 17:39:18','admin','2022-10-09 15:57:25','admin');
+INSERT INTO `base_user` VALUES (5,'zhangjun01','322867d50fd273441760a8f601b6b9b0','958','张俊','zhangjun01@hesaitech.com','13761019032',3,4,'[5]',0,1,'','2022-09-29 17:39:18','admin','2022-10-09 16:14:54','zhangjun01'),(6,'aaa','068896804551b982511aff19931628b9','','AAA','','',3,6,'[6]',0,0,'','2022-10-09 16:14:46','zhangjun01','2022-10-09 16:14:46','zhangjun01');
 /*!40000 ALTER TABLE `base_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,4 +378,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-09 16:08:49
+-- Dump completed on 2022-10-09 16:28:31
