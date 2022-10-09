@@ -1,17 +1,28 @@
 var DB = require('../dao/db');
+var baseService = require('./base');
 
 class SecurityService {
   constructor() {
+    this.menuTree = [];
     this.menus = {};
+    this.privileges = [];
     this.roles = {};
   }
 
   async init() {
     let db = new DB();
+    let tree = await db.find('select * from `base_menu` where `parent_id` = 0 and `type` = 0');
+    let list = await db.find('select * from `base_menu` where `parent_id` <> 0 and `type` = 0');
+    for (let i = 0; i < tree.length; i++) {
+      baseService.getTree(list, tree[i]);
+    }
+    this.menuTree = tree;
     let menus = await db.findByTable('base_menu', [], '', '', {});
     this.menus = {};
+    this.privileges = [];
     for (let i = 0; i < menus.length; i++) {
       this.menus[menus[i].id + ''] = menus[i];
+      if (menus[i].type === 1) this.privileges.push(menus[i].code)
     }
     let roles = await db.findByTable('base_role', [], '', '', {});
     this.roles = {};
@@ -28,10 +39,17 @@ class SecurityService {
       }
       this.roles[roles[i].id + ''] = role;
     }
-    console.log(this.roles);
   }
 
   hasPrivilege(user, code) {
+    for (let i = 0; i < user.roles.length; i++) {
+      let role = this.roles[user.roles[i] + ''];
+      if (!role) continue;
+      if (role.privileges.indexOf(code) >= 0) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 

@@ -11,6 +11,14 @@ export const login = (account, password) => {
   });
 };
 
+export const loginByFeishu = code => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=login&_action=loginByFeishu',
+    data: { code: code }
+  });
+};
+
 export const logout = () => {
   return request({
     method: 'POST',

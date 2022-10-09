@@ -14,68 +14,7 @@
             </el-icon>
             <span>首頁</span>
           </el-menu-item>
-          <el-sub-menu index="/system">
-            <template #title>
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>系统管理</span>
-            </template>
-            <el-menu-item index="/system/orgnization">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>组织管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/station">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>岗位管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/menu">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>菜单管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/role">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>角色管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/user">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>用户管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/dictionary">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>字典管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/configuration">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>配置管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/i18n">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>国际化管理</span>
-            </el-menu-item>
-            <el-menu-item index="/system/log">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>日志查询</span>
-            </el-menu-item>
-          </el-sub-menu>
+          <MainMenu v-for="(item, index) in tree" :key="item.route" :node="item"></MainMenu>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -103,6 +42,8 @@
 
 <script>
 import { logout } from '../api/login';
+import { init } from '../api/system/menu';
+import MainMenu from '../components/MainMenu.vue';
 export default {
   name: 'Master',
   data() {
@@ -111,10 +52,30 @@ export default {
       tags: [{
         path: '/home',
         label: '首页'
-      }]
+      }],
+      tree: [],
+      dic: {}
     };
   },
-  mounted() {
+  components: { MainMenu },
+  async mounted() {
+    try {
+      let res = await init();
+      if (res.data.code !== 0) {
+        this.$message({
+          type: 'error',
+          message: '获取数据失败：' + res.data.msg
+        });
+      } else {
+        this.tree = res.data.data.tree;
+        this.dic = res.data.data.dic;
+      }
+    } catch (err) {
+      this.$message({
+        type: 'error',
+        message: '获取数据失败：' + err.message
+      });
+    }
     this.fixMenu();
   },
   updated() {
@@ -135,7 +96,7 @@ export default {
       if (!found) {
         this.tags.push({
           path: this.path,
-          label: '未知'
+          label: this.dic[this.path] || ''
         });
       }
       this.$nextTick(() => {

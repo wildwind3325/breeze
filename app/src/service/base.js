@@ -1,5 +1,6 @@
 var DB = require('../dao/db');
 var util = require('../util/util');
+var securityService = require('./security');
 
 class BaseService {
   constructor() {
@@ -17,10 +18,20 @@ class BaseService {
       };
     }
     if (this.safeModules.indexOf(module) < 0 && !req.session.user) {
-      return {
-        code: -1,
-        msg: '尚未登录或登录已超时'
-      };
+      if (!req.session.user) {
+        return {
+          code: -1,
+          msg: '尚未登录或登录已超时'
+        };
+      }
+      if (req.session.user.is_admin === 0) {
+        if (!securityService.hasPrivilege(req.session.user, module + '.' + action)) {
+          return {
+            code: 1,
+            msg: '你没有权限进行此操作'
+          };
+        }
+      }
     }
     module = module.replace(/\./g, '/');
     let controller, method;

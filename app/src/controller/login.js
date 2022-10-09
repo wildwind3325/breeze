@@ -1,6 +1,8 @@
 var config = require('../config/config');
 var DB = require('../dao/db');
 var util = require('../util/util');
+var baseService = require('../service/base');
+var feishuService = require('../service/feishu');
 
 class LoginController {
   constructor() {
@@ -33,7 +35,42 @@ class LoginController {
           msg: '密码错误'
         });
       } else {
-        req.session.user = list[0];
+        let user = await db.findById('view_base_user', list[0].id, false);
+        user.department_name = user.department_name || '';
+        user.station_name = user.station_name || '';
+        user.roles = JSON.parse(user.roles);
+        req.session.user = user;
+        res.send({ code: 0 });
+      }
+    }
+  }
+
+  async loginByFeishu(req, res, data) {
+    if (!feishuService.app_id) {
+      let app_id = await baseService.getConfig('login.feishu.app_id');
+      let app_secret = await baseService.getConfig('login.feishu.app_secret');
+      await feishuService.setup(app_id, app_secret);
+    }
+    let result = await feishuService.login(data.code);
+    if (result.code !== 0) {
+      res.send({
+        code: 1,
+        msg: '飞书认证失败'
+      });
+    } else {
+      let db = new DB();
+      let list = await db.find('select * from `view_base_user` where `email` = :email', { email: result.data.email });
+      if (list.length === 0) {
+        res.send({
+          code: 1,
+          msg: '系统找不到该用户信息'
+        });
+      } else {
+        let user = list[0];
+        user.department_name = user.department_name || '';
+        user.station_name = user.station_name || '';
+        user.roles = JSON.parse(user.roles);
+        req.session.user = user;
         res.send({ code: 0 });
       }
     }
@@ -45,17 +82,29 @@ class LoginController {
     res.send({ code: 0 });
   }
 
-  status(req, res, data) {
+  async status(req, res, data) {
     if (req.session.user) {
       res.send({
         code: 0,
         data: { loggedIn: true }
       });
     } else {
-      res.send({
-        code: 0,
-        data: { loggedIn: false }
-      });
+      let flag = await baseService.getConfig('login.feishu.enable');
+      if (flag === '1') {
+        let app_id = await baseService.getConfig('login.feishu.app_id');
+        res.send({
+          code: 0,
+          data: {
+            loggedIn: false,
+            feishu_app_id: app_id
+          }
+        });
+      } else {
+        res.send({
+          code: 0,
+          data: { loggedIn: false }
+        });
+      }
     }
   }
 }

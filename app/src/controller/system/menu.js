@@ -1,6 +1,7 @@
 var DB = require('../../dao/db');
 
 var baseService = require('../../service/base');
+var securityService = require('../../service/security');
 
 class MenuController {
   constructor() {
@@ -49,6 +50,7 @@ class MenuController {
       updated_by: req.session.user.account
     }, data);
     await db.insert('base_menu', item);
+    await securityService.init();
     res.send({ code: 0 });
   }
 
@@ -56,6 +58,7 @@ class MenuController {
     let db = new DB();
     let item = Object.assign({ updated_by: req.session.user.account }, data);
     await db.update('base_menu', item);
+    await securityService.init();
     res.send({ code: 0 });
   }
 
@@ -80,7 +83,51 @@ class MenuController {
       }
     }
     await db.delete('base_menu', data.id);
+    await securityService.init();
     res.send({ code: 0 });
+  }
+
+  async init(req, res, data) {
+    let tree = JSON.parse(JSON.stringify(securityService.menuTree));
+    let roles = req.session.user.roles;
+    let menus = [];
+    let dic = {};
+    for (let i = 0; i < roles.length; i++) {
+      let arr = securityService.roles[roles[i] + ''].menus;
+      for (let j = 0; j < arr.length; j++) {
+        if (menus.indexOf(arr[j]) < 0) menus.push(arr[j]);
+      }
+    }
+    for (let i = tree.length - 1; i >= 0; i--) {
+      if (menus.indexOf(tree[i].route) < 0) {
+        tree.splice(i, 1);
+      } else {
+        dic[tree[i].route] = tree[i].label;
+        this.genMenuTree(tree[i], menus, dic);
+      }
+    }
+    res.send({
+      code: 0,
+      data: {
+        tree: tree,
+        dic: dic
+      }
+    });
+  }
+
+  genMenuTree(node, menus, dic) {
+    if (node.children.length === 0) {
+      delete node.children;
+      return;
+    }
+    for (let i = node.children.length - 1; i >= 0; i--) {
+      if (menus.indexOf(node.children[i].route) < 0) {
+        node.children.splice(i, 1);
+      } else {
+        dic[node.children[i].route] = node.children[i].label;
+        this.genMenuTree(node.children[i], menus, dic);
+      }
+    }
   }
 }
 

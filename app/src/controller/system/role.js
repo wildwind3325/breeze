@@ -1,5 +1,7 @@
 var DB = require('../../dao/db');
 
+var securityService = require('../../service/security');
+
 class RoleController {
   constructor() {
     this.rules = {
@@ -51,6 +53,7 @@ class RoleController {
       updated_by: req.session.user.account
     }, data);
     await db.insert('base_role', item);
+    await securityService.init();
     res.send({
       code: 0,
       data: item
@@ -61,6 +64,7 @@ class RoleController {
     let db = new DB();
     let item = Object.assign({ updated_by: req.session.user.account }, data);
     await db.update('base_role', item);
+    await securityService.init();
     res.send({ code: 0 });
   }
 
@@ -77,6 +81,7 @@ class RoleController {
       }
     }
     await db.delete('base_role', data.id);
+    await securityService.init();
     res.send({ code: 0 });
   }
 }

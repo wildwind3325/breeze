@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { login, status } from '../api/login';
+import { login, loginByFeishu, status } from '../api/login';
 export default {
   name: 'Login',
   data() {
@@ -40,6 +40,22 @@ export default {
       if (res.data.code === 0 && res.data.data.loggedIn) {
         localStorage.removeItem('target_uri');
         this.$router.replace(target);
+      } else {
+        if (this.$route.query.code) {
+          let res = await loginByFeishu(this.$route.query.code);
+          if (res.data.code !== 0) {
+            this.$message({
+              type: 'error',
+              message: '登录失败：' + res.data.msg
+            });
+          } else {
+            localStorage.removeItem('target_uri');
+            this.$router.replace(target);
+          }
+        } else if (res.data.data.feishu_app_id) {
+          let url = 'https://open.feishu.cn/open-apis/authen/v1/index?app_id=' + res.data.data.feishu_app_id + '&redirect_uri=' + encodeURIComponent(location.origin + location.pathname + '#/');
+          location.href = url;
+        }
       }
     } catch (err) { }
   },

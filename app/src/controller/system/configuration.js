@@ -21,7 +21,7 @@ class ConfigurationController {
         group_id: /^[1-9]\d*$/,
         code: /^.{1,64}$/,
         label: /^.{1,64}$/,
-        value: /^.{1,512}$/,
+        value: /^.{0,512}$/,
         memo: /^.{0,512}$/
       },
       edit: {
@@ -29,7 +29,7 @@ class ConfigurationController {
         group_id: /^[1-9]\d*$/,
         code: /^.{1,64}$/,
         label: /^.{1,64}$/,
-        value: /^.{1,512}$/,
+        value: /^.{0,512}$/,
         memo: /^.{0,512}$/
       },
       remove: {

@@ -6,7 +6,8 @@ var session = require('express-session');
 var log4js = require('log4js');
 
 require('./util/enhance');
-require('./config/env')();
+var env = require('./config/env');
+env.init();
 var config = require('./config/config');
 var router = require('./router');
 

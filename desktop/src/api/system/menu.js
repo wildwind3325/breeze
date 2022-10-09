@@ -30,3 +30,10 @@ export const remove = id => {
     data: { id: id }
   });
 };
+
+export const init = () => {
+  return request({
+    method: 'POST',
+    url: '/api/common?_module=system.menu&_action=init'
+  });
+};

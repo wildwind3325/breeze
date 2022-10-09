@@ -35,7 +35,7 @@ CREATE TABLE `base_config` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `base_config` (
 
 LOCK TABLES `base_config` WRITE;
 /*!40000 ALTER TABLE `base_config` DISABLE KEYS */;
+INSERT INTO `base_config` VALUES (1,1,'login.feishu.enable','集成飞书登录','0','','2022-10-09 15:17:25','admin','2022-10-09 16:07:35','zhangjun01'),(2,1,'login.feishu.app_id','飞书ID','cli_a21a2c3a9778d00c','','2022-10-09 15:18:40','admin','2022-10-09 15:19:14','admin'),(3,1,'login.feishu.app_secret','飞书密钥','43PyFN9Uj3rpYLbu0r6K4eyb7eKc6ywm','','2022-10-09 15:19:01','admin','2022-10-09 15:19:21','admin');
 /*!40000 ALTER TABLE `base_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +214,7 @@ CREATE TABLE `base_menu` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +223,7 @@ CREATE TABLE `base_menu` (
 
 LOCK TABLES `base_menu` WRITE;
 /*!40000 ALTER TABLE `base_menu` DISABLE KEYS */;
-INSERT INTO `base_menu` VALUES (4,0,'111',0,'/111','AddLocation','','2022-09-29 19:28:41','admin','2022-09-29 19:28:41','admin'),(5,4,'a',1,'','AddLocation','a','2022-09-29 19:28:51','admin','2022-09-29 19:28:51','admin'),(6,4,'b',1,'','Apple','b','2022-09-29 19:29:00','admin','2022-09-29 19:29:00','admin');
+INSERT INTO `base_menu` VALUES (1,0,'系统管理',0,'/system','Setting','','2022-10-09 11:23:45','admin','2022-10-09 11:23:45','admin'),(2,1,'组织管理',0,'/system/orgnization','HelpFilled','','2022-10-09 11:24:26','admin','2022-10-09 11:24:53','admin'),(3,1,'岗位管理',0,'/system/station','Place','','2022-10-09 11:25:45','admin','2022-10-09 11:25:45','admin'),(4,1,'菜单管理',0,'/system/menu','Menu','','2022-10-09 11:26:07','admin','2022-10-09 11:26:07','admin'),(5,1,'角色管理',0,'/system/role','MagicStick','','2022-10-09 11:27:17','admin','2022-10-09 11:27:17','admin'),(6,1,'用户管理',0,'/system/user','User','','2022-10-09 11:27:38','admin','2022-10-09 11:27:38','admin'),(7,1,'字典管理',0,'/system/dictionary','Notebook','','2022-10-09 11:27:54','admin','2022-10-09 11:27:54','admin'),(8,1,'配置管理',0,'/system/configuration','Tools','','2022-10-09 11:28:09','admin','2022-10-09 11:28:09','admin'),(9,1,'国际化',0,'/system/i18n','InfoFilled','','2022-10-09 11:28:33','admin','2022-10-09 11:28:33','admin'),(10,1,'日志查询',0,'/system/log','Search','','2022-10-09 11:29:04','admin','2022-10-09 11:29:19','admin');
 /*!40000 ALTER TABLE `base_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +244,7 @@ CREATE TABLE `base_role` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +253,7 @@ CREATE TABLE `base_role` (
 
 LOCK TABLES `base_role` WRITE;
 /*!40000 ALTER TABLE `base_role` DISABLE KEYS */;
-INSERT INTO `base_role` VALUES (3,'测试','[4,5,6]','2022-09-29 19:29:12','admin','2022-09-29 19:29:12','admin');
+INSERT INTO `base_role` VALUES (5,'管理员','[1,2,3,4,5,6,7,8,9,10]','2022-10-09 11:29:46','admin','2022-10-09 11:29:46','admin'),(6,'普通用户','[]','2022-10-09 11:29:52','admin','2022-10-09 11:29:52','admin');
 /*!40000 ALTER TABLE `base_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +322,7 @@ CREATE TABLE `base_user` (
 
 LOCK TABLES `base_user` WRITE;
 /*!40000 ALTER TABLE `base_user` DISABLE KEYS */;
-INSERT INTO `base_user` VALUES (3,'admin','eac4108912af90ae96e858190f4d8af7','','系统管理员','','',0,0,'[]',0,1,'','2022-09-29 15:45:05','SYSTEM','2022-09-29 16:55:59','admin'),(5,'zhangjun01','322867d50fd273441760a8f601b6b9b0','958','张俊','zhangjun01@hesaitech.com','13761019032',0,0,'[]',0,0,'','2022-09-29 17:39:18','admin','2022-09-29 17:39:18','admin');
+INSERT INTO `base_user` VALUES (5,'zhangjun01','322867d50fd273441760a8f601b6b9b0','958','张俊','zhangjun01@hesaitech.com','13761019032',0,0,'[5]',0,1,'','2022-09-29 17:39:18','admin','2022-10-09 15:57:25','admin');
 /*!40000 ALTER TABLE `base_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,4 +378,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-29 19:57:30
+-- Dump completed on 2022-10-09 16:08:49
