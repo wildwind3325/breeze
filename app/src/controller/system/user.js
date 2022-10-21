@@ -101,7 +101,7 @@ class UserController {
     if (item.is_admin === 1 && req.session.user.is_admin === 0) {
       res.send({
         code: 1,
-        msg: '你无权处理管理员账号'
+        msg: 'system.user.notAdmin'
       });
       return;
     }
@@ -116,7 +116,7 @@ class UserController {
     if (user.is_admin === 1 && req.session.user.is_admin === 0) {
       res.send({
         code: 1,
-        msg: '你无权处理管理员账号'
+        msg: 'system.user.notAdmin'
       });
       return;
     }
@@ -135,14 +135,14 @@ class UserController {
     if (user.is_admin === 1 && req.session.user.is_admin === 0) {
       res.send({
         code: 1,
-        msg: '你无权处理管理员账号'
+        msg: 'system.user.notAdmin'
       });
       return;
     }
     if (user.id === req.session.user.id) {
       res.send({
         code: 1,
-        msg: '你不能删除自己'
+        msg: 'system.user.selfDelete'
       });
       return;
     }

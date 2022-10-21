@@ -13,21 +13,21 @@ class BaseService {
     if (!/^[a-zA-Z0-9\.]+$/.test(module) || !/^[a-zA-Z0-9]+$/.test(action)) {
       return {
         code: 1,
-        msg: '请求不合法'
+        msg: 'system.msg.wrongRequest'
       };
     }
     if (this.safeModules.indexOf(module) < 0) {
       if (!req.session.user) {
         return {
           code: -1,
-          msg: '尚未登录或登录已超时'
+          msg: 'system.msg.unauthorized'
         };
       }
       if (req.session.user.is_admin === 0) {
         if (!require('./security').hasPrivilege(req.session.user, module + '.' + action)) {
           return {
             code: 1,
-            msg: '你没有权限进行此操作'
+            msg: 'system.msg.permissionDenied'
           };
         }
       }
@@ -41,7 +41,7 @@ class BaseService {
     if (!method || !method instanceof Function) {
       return {
         code: 1,
-        msg: '请求的模块或方法不存在'
+        msg: 'system.msg.nonexistent'
       };
     }
     let rules = controller.rules;
@@ -52,7 +52,7 @@ class BaseService {
           || (rule instanceof Function && !rule.call(controller, data[key]))) {
           return {
             code: 1,
-            msg: '输入的参数不符合要求'
+            msg: 'system.msg.wrongParam'
           };
         }
       }

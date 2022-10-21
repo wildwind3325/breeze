@@ -16,7 +16,7 @@ class DataController {
     if (list.length === 0) {
       res.send({
         code: 1,
-        msg: '找不到该选择项'
+        msg: 'system.data.notFound'
       });
       return;
     }

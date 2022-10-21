@@ -27,8 +27,8 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-pagination v-model:current-page="pageNumber" background layout="->, prev, pager, next" :total="total"
-    style="margin-top: 10px;" @current-change="query" />
+  <el-pagination v-model:current-page="pageNumber" :page-size="8" background layout="->, prev, pager, next"
+    :total="total" style="margin-top: 10px;" @current-change="query" />
   <el-dialog v-model="showDialog" title="国际化管理">
     <el-form :model="form" :label-width="80">
       <el-form-item label="代码">

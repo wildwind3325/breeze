@@ -1,7 +1,7 @@
 <template>
   <div class="div-center login-page">
     <div class="div-center login-box">
-      <div class="login-box-title">用户登录</div>
+      <div class="login-box-title">{{ $t('system.login.title') }}</div>
       <div class="login-box-item">
         <el-radio-group v-model="locale" @change="changeLocale">
           <el-radio label="zh">中文</el-radio>
@@ -9,14 +9,14 @@
         </el-radio-group>
       </div>
       <div class="login-box-item">
-        <el-input v-model="account" prefix-icon="User" placeholder="请输入账号" />
+        <el-input v-model="account" prefix-icon="User" :placeholder="$t('system.login.accountHint')" />
       </div>
       <div class="login-box-item">
-        <el-input v-model="password" type="password" prefix-icon="Lock" placeholder="请输入密码"
+        <el-input v-model="password" type="password" prefix-icon="Lock" :placeholder="$t('system.login.passwordHint')"
           @keyup.enter.native="login" />
       </div>
       <div class="login-box-item">
-        <el-button type="primary" style="width: 100%;" @click="login">登录</el-button>
+        <el-button type="primary" style="width: 100%;" @click="login">{{ $t('system.login.login') }}</el-button>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
           if (res.data.code !== 0) {
             this.$message({
               type: 'error',
-              message: '登录失败：' + res.data.msg
+              message: this.$t('system.login.loginFailed', [this.$t(res.data.msg)])
             });
           } else {
             localStorage.removeItem('target_uri');
@@ -69,7 +69,7 @@ export default {
       if (!this.account || !this.password) {
         this.$message({
           type: 'warning',
-          message: '请先输入完整的信息'
+          message: this.$t('system.view.incomplete')
         });
         return;
       }
@@ -78,7 +78,7 @@ export default {
         if (res.data.code !== 0) {
           this.$message({
             type: 'error',
-            message: '登录失败：' + res.data.msg
+            message: this.$t('system.login.loginFailed', [this.$t(res.data.msg)])
           });
           return;
         }
@@ -89,7 +89,7 @@ export default {
       } catch (err) {
         this.$message({
           type: 'error',
-          message: '登录失败：' + err.message
+          message: this.$t('system.login.loginFailed', [err.message])
         });
       }
     }

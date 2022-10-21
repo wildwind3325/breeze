@@ -75,7 +75,7 @@ class ConfigurationController {
     if (count[0].total > 0) {
       res.send({
         code: 1,
-        msg: '该对象不为空，无法直接删除。'
+        msg: 'system.msg.notEmpty'
       });
       return;
     }

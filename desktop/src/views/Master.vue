@@ -12,7 +12,7 @@
             <el-icon>
               <HomeFilled />
             </el-icon>
-            <span>首頁</span>
+            <span>{{ $t('system.view.homepage') }}</span>
           </el-menu-item>
           <MainMenu v-for="(item, index) in tree" :key="item.route" :node="item"></MainMenu>
         </el-menu>
@@ -20,7 +20,7 @@
     </div>
     <div style="flex-grow: 1;">
       <div class="header">
-        <el-button type="warning" @click="logout">注销</el-button>
+        <el-button type="warning" @click="logout">{{ $t('system.view.logout') }}</el-button>
       </div>
       <div class="navibar">
         <el-scrollbar ref="navibar">
@@ -51,7 +51,7 @@ export default {
       path: '',
       tags: [{
         path: '/home',
-        label: '首页'
+        label: this.$t('system.view.homepage')
       }],
       tree: [],
       dic: {}
@@ -64,22 +64,22 @@ export default {
       if (res.data.code !== 0) {
         this.$message({
           type: 'error',
-          message: '获取数据失败：' + res.data.msg
+          message: this.$t('system.view.loadFailed', [this.$t(res.data.msg)])
         });
       } else {
         this.tree = res.data.data.tree;
         this.dic = res.data.data.dic;
+        this.fixMenu();
       }
     } catch (err) {
       this.$message({
         type: 'error',
-        message: '获取数据失败：' + err.message
+        message: this.$t('system.view.loadFailed', [err.message])
       });
     }
-    this.fixMenu();
   },
   updated() {
-    if (this.path !== this.$route.path) {
+    if (this.path !== this.$route.path && this.tree.length > 0) {
       this.fixMenu();
     }
   },

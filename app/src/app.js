@@ -25,7 +25,7 @@ app.use(session({
   rolling: true,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 3600 * 24,
+    maxAge: 1000 * 3600 * 24 * 7,
     sameSite: 'lax'
   }
 }));
@@ -36,14 +36,14 @@ app.use('/api', router);
 app.use(function (req, res, next) {
   res.status(404).send({
     code: 1,
-    msg: '404 Not Found'
+    msg: 'system.msg.notFound'
   });
 });
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 500).send({
     code: 1,
-    msg: err.message
+    msg: 'system.msg.exception'
   });
 });
 

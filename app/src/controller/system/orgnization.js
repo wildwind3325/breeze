@@ -57,7 +57,7 @@ class OrgnizationController {
     if (item.parent_id === 0) {
       res.send({
         code: 1,
-        msg: '无法删除顶级节点'
+        msg: 'system.msg.immortal'
       });
       return;
     }
@@ -66,7 +66,7 @@ class OrgnizationController {
     if (countSub[0].total > 0 || countUser[0].total > 0) {
       res.send({
         code: 1,
-        msg: '该对象不为空，无法直接删除。'
+        msg: 'system.msg.notEmpty'
       });
       return;
     }

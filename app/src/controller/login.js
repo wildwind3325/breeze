@@ -26,13 +26,13 @@ class LoginController {
     if (list.length === 0) {
       res.send({
         code: 1,
-        msg: '该用户不存在或已被停用'
+        msg: 'system.login.userNotFound'
       });
     } else {
       if (list[0].password !== util.md5(password + account)) {
         res.send({
           code: 1,
-          msg: '密码错误'
+          msg: 'system.login.wrongPassword'
         });
       } else {
         let user = await db.findById('view_base_user', list[0].id, false);
@@ -55,7 +55,7 @@ class LoginController {
     if (result.code !== 0) {
       res.send({
         code: 1,
-        msg: '飞书认证失败'
+        msg: 'system.login.feishuFailed'
       });
     } else {
       let db = new DB();
@@ -63,7 +63,7 @@ class LoginController {
       if (list.length === 0) {
         res.send({
           code: 1,
-          msg: '系统找不到该用户信息'
+          msg: 'system.login.userNotFound'
         });
       } else {
         let user = list[0];
