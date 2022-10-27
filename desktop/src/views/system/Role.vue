@@ -1,17 +1,17 @@
 <template>
   <div class="toolbar">
     <div class="toolbar-function">
-      <el-button type="success" icon="Plus" @click="add">新建</el-button>
+      <el-button type="success" icon="Plus" @click="add">{{ $t('system.view.new') }}</el-button>
     </div>
   </div>
   <el-table :data="list">
-    <el-table-column prop="label" label="名称" />
-    <el-table-column prop="created_at" label="创建时间" width="180" align="center">
+    <el-table-column prop="label" :label="$t('system.view.name')" />
+    <el-table-column prop="created_at" :label="$t('system.view.createdAt')" width="180" align="center">
       <template #default="scope">
         <span>{{ new Date(scope.row.created_at).format('yyyy-MM-dd HH:mm:ss') }}</span>
       </template>
     </el-table-column>
-    <el-table-column label="操作" width="120" align="center">
+    <el-table-column :label="$t('system.view.command')" width="120" align="center">
       <template #default="scope">
         <el-button-group>
           <el-button type="warning" icon="Edit" size="small" @click="edit(scope.row)" />
@@ -20,19 +20,19 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-drawer v-model="showDrawer" title="角色管理" size="60%">
+  <el-drawer v-model="showDrawer" :title="$t('system.role.title')" size="60%">
     <el-form :label-width="80">
-      <el-form-item label="名称">
+      <el-form-item :label="$t('system.view.name')">
         <el-input v-model="form.label" />
       </el-form-item>
-      <el-form-item label="权限">
+      <el-form-item :label="$t('system.menu.permission')">
         <el-tree ref="roleTreeRef" :data="menus" node-key="id" show-checkbox check-strictly />
       </el-form-item>
     </el-form>
     <template #footer>
       <div>
-        <el-button @click="showDrawer = false">取消</el-button>
-        <el-button type="primary" @click="save">确定</el-button>
+        <el-button @click="showDrawer = false">{{ $t('system.view.cancel') }}</el-button>
+        <el-button type="primary" @click="save">{{ $t('system.view.save') }}</el-button>
       </div>
     </template>
   </el-drawer>
@@ -70,7 +70,7 @@ export default {
         if (res.data.code !== 0) {
           this.$message({
             type: 'error',
-            message: '获取数据失败：' + res.data.msg
+            message: this.$t('system.view.loadFailed', [this.$t(res.data.msg)])
           });
         } else {
           this.list = res.data.data;
@@ -78,7 +78,7 @@ export default {
       } catch (err) {
         this.$message({
           type: 'error',
-          message: '获取数据失败：' + err.message
+          message: this.$t('system.view.loadFailed', [err.message])
         });
       }
     },
@@ -106,26 +106,26 @@ export default {
       });
     },
     remove(row, index) {
-      this.$confirm('是否确认删除？', '系统提示')
+      this.$confirm(this.$t('system.view.confirmRemove'))
         .then(async () => {
           try {
             let res = await role.remove(row.id);
             if (res.data.code !== 0) {
               this.$message({
                 type: 'error',
-                message: '操作失败：' + res.data.msg
+                message: this.$t('system.msg.actionFailed', [this.$t(res.data.msg)])
               });
             } else {
               this.list.splice(index, 1);
               this.$message({
                 type: 'success',
-                message: '操作成功'
+                message: this.$t('system.msg.actionSucceeded')
               });
             }
           } catch (err) {
             this.$message({
               type: 'error',
-              message: '操作失败：' + err.message
+              message: this.$t('system.msg.actionFailed', [err.message])
             });
           }
         })
@@ -135,7 +135,7 @@ export default {
       if (!this.form.label) {
         this.$message({
           type: 'warning',
-          message: '请将信息填写完整'
+          message: this.$t('system.view.incomplete')
         });
         return;
       }
@@ -158,7 +158,7 @@ export default {
         if (res.data.code !== 0) {
           this.$message({
             type: 'error',
-            message: '操作失败：' + res.data.msg
+            message: this.$t('system.msg.actionFailed', [this.$t(res.data.msg)])
           });
         } else {
           if (this.form.id === 0) {
@@ -171,13 +171,13 @@ export default {
           this.showDrawer = false;
           this.$message({
             type: 'success',
-            message: '操作成功'
+            message: this.$t('system.msg.actionSucceeded')
           });
         }
       } catch (err) {
         this.$message({
           type: 'error',
-          message: '操作失败：' + err.message
+          message: this.$t('system.msg.actionFailed', [err.message])
         });
       }
     }

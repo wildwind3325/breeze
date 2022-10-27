@@ -64,7 +64,7 @@ CREATE TABLE `base_config_group` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label_UNIQUE` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `base_department` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `base_i18n` (
   `updated_by` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +133,7 @@ CREATE TABLE `base_i18n` (
 
 LOCK TABLES `base_i18n` WRITE;
 /*!40000 ALTER TABLE `base_i18n` DISABLE KEYS */;
+INSERT INTO `base_i18n` VALUES (1,'system.msg.exception','Exception occurred during processing request','处理请求时发生异常','2022-10-21 09:42:07','zhangjun01','2022-10-21 09:43:17','zhangjun01'),(2,'system.msg.notFound','404 Not Found','404 页面不存在','2022-10-21 09:45:06','zhangjun01','2022-10-21 11:20:11','zhangjun01'),(3,'system.msg.wrongRequest','Wrong request','错误的请求','2022-10-21 09:49:27','zhangjun01','2022-10-21 09:49:27','zhangjun01'),(4,'system.msg.unauthorized','You are not logged in','尚未登录或登录已超时','2022-10-21 09:55:59','zhangjun01','2022-10-21 10:05:52','zhangjun01'),(5,'system.msg.permissionDenied','Permission denied','你没有权限进行此操作','2022-10-21 10:07:35','zhangjun01','2022-10-21 10:07:35','zhangjun01'),(6,'system.msg.nonexistent','Module or action doesn\'t exist','不存在的模块或方法','2022-10-21 10:10:09','zhangjun01','2022-10-21 10:10:09','zhangjun01'),(7,'system.msg.wrongParam','The parameters don\'t meet the requirements','输入的参数不符合要求','2022-10-21 10:10:52','zhangjun01','2022-10-21 10:11:02','zhangjun01'),(8,'system.login.userNotFound','This account doesn\'t exist or has been disabled','该用户不存在或已被停用','2022-10-21 10:23:47','zhangjun01','2022-10-21 10:23:47','zhangjun01'),(9,'system.login.wrongPassword','Wrong password','密码错误','2022-10-21 10:24:10','zhangjun01','2022-10-21 10:24:10','zhangjun01'),(10,'system.login.feishuFailed','Login by feishu failed','飞书认证失败','2022-10-21 10:25:25','zhangjun01','2022-10-21 10:25:25','zhangjun01'),(11,'system.data.notFound','Lov not found','找不到该选择项','2022-10-21 10:26:57','zhangjun01','2022-10-21 10:26:57','zhangjun01'),(12,'system.msg.notEmpty','Target is not empty, can\'t be removed.','该对象不为空，无法直接删除。','2022-10-21 10:27:55','zhangjun01','2022-10-21 10:27:55','zhangjun01'),(13,'system.msg.immortal','Can\'t be removed','不可删除','2022-10-21 10:30:12','zhangjun01','2022-10-21 10:30:12','zhangjun01'),(14,'system.user.selfDelete','Can\'t remove yourself','你不能删除自己','2022-10-21 10:31:22','zhangjun01','2022-10-21 10:31:22','zhangjun01'),(15,'system.user.notAdmin','You can\'t modify these accounts','你无权处理管理员账号','2022-10-21 10:33:08','zhangjun01','2022-10-21 10:33:08','zhangjun01'),(16,'system.view.loadFailed','Failed to load data: {0}','加载数据失败：{0}','2022-10-21 11:33:02','zhangjun01','2022-10-21 11:33:02','zhangjun01'),(17,'system.view.homepage','Home','首页','2022-10-21 11:40:55','zhangjun01','2022-10-21 11:40:55','zhangjun01'),(18,'system.view.logout','Logout','注销','2022-10-21 12:57:01','zhangjun01','2022-10-21 12:57:01','zhangjun01'),(19,'system.login.title','User Login','用户登录','2022-10-21 13:30:27','zhangjun01','2022-10-21 13:30:27','zhangjun01'),(20,'system.login.login','Login','登录','2022-10-21 13:31:05','zhangjun01','2022-10-21 13:31:05','zhangjun01'),(21,'system.login.accountHint','Please enter account','请输入账号','2022-10-21 13:42:10','zhangjun01','2022-10-21 13:42:10','zhangjun01'),(22,'system.login.passwordHint','Please enter password','请输入密码','2022-10-21 13:42:28','zhangjun01','2022-10-21 13:42:28','zhangjun01'),(23,'system.login.loginFailed','Login failed: {0}','登录失败：{0}','2022-10-21 13:43:34','zhangjun01','2022-10-21 13:43:34','zhangjun01'),(24,'system.view.incomplete','Please enter complete information','请先输入完整的信息','2022-10-21 13:46:03','zhangjun01','2022-10-21 13:46:03','zhangjun01'),(25,'system.msg.actionSucceeded','Succeeded','操作成功','2022-10-21 15:21:39','zhangjun01','2022-10-21 15:21:39','zhangjun01'),(26,'system.msg.actionFailed','Failed: {0}','操作失败：{0}','2022-10-21 15:22:03','zhangjun01','2022-10-21 15:22:03','zhangjun01'),(27,'system.configuration.group','Group','分组','2022-10-21 15:28:41','zhangjun01','2022-10-21 15:28:41','zhangjun01'),(28,'system.view.new','New','新建','2022-10-21 15:29:37','zhangjun01','2022-10-21 15:29:37','zhangjun01'),(29,'system.view.edit','Edit','编辑','2022-10-21 15:33:54','zhangjun01','2022-10-21 15:33:54','zhangjun01'),(30,'system.view.remove','Remove','删除','2022-10-21 15:34:33','zhangjun01','2022-10-21 15:34:33','zhangjun01'),(31,'system.view.search','Search','搜索','2022-10-21 15:35:19','zhangjun01','2022-10-21 15:35:19','zhangjun01'),(32,'system.view.keywordHint','Please enter keyword','请输入关键字','2022-10-21 15:35:54','zhangjun01','2022-10-21 15:35:54','zhangjun01'),(33,'system.view.name','Name','名称','2022-10-21 15:37:21','zhangjun01','2022-10-21 15:37:21','zhangjun01'),(34,'system.view.code','Code','代码','2022-10-21 15:37:30','zhangjun01','2022-10-21 15:37:30','zhangjun01'),(35,'system.view.value','Value','值','2022-10-21 15:37:50','zhangjun01','2022-10-21 15:37:50','zhangjun01'),(36,'system.view.createdAt','Created at','创建时间','2022-10-21 15:38:28','zhangjun01','2022-10-21 15:38:28','zhangjun01'),(37,'system.view.command','Command','操作','2022-10-21 15:38:49','zhangjun01','2022-10-21 15:38:49','zhangjun01'),(38,'system.view.submit','Submit','确认','2022-10-21 15:39:16','zhangjun01','2022-10-21 15:39:16','zhangjun01'),(39,'system.view.cancel','Cancel','取消','2022-10-21 15:39:26','zhangjun01','2022-10-21 15:39:26','zhangjun01'),(40,'system.configuration.title','Configuration','配置管理','2022-10-21 15:42:36','zhangjun01','2022-10-21 15:42:36','zhangjun01'),(41,'system.view.memo','Memo','备注','2022-10-21 15:43:38','zhangjun01','2022-10-21 15:43:38','zhangjun01'),(42,'system.view.all','All','全部','2022-10-21 15:44:45','zhangjun01','2022-10-21 15:44:45','zhangjun01'),(43,'system.view.notify','System Alert','系统提示','2022-10-21 15:47:25','zhangjun01','2022-10-21 15:47:25','zhangjun01'),(44,'system.view.confirmRemove','Are you sure to remove object?','是否确认删除？','2022-10-21 15:48:41','zhangjun01','2022-10-21 15:48:41','zhangjun01'),(45,'system.view.nameHint','Please enter name','请输入名称','2022-10-21 16:33:27','zhangjun01','2022-10-21 16:33:27','zhangjun01'),(46,'system.configuration.needGroup','Please select a group','请选择一个分组','2022-10-21 16:34:19','zhangjun01','2022-10-21 16:34:19','zhangjun01');
 /*!40000 ALTER TABLE `base_i18n` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,4 +379,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-09 16:28:31
+-- Dump completed on 2022-10-21 17:49:04

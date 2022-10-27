@@ -69,7 +69,7 @@
           </el-form>
           <template #footer>
             <el-button @click="showDialog = false">{{ $t('system.view.cancel') }}</el-button>
-            <el-button type="primary" @click="save">{{ $t('system.view.submit') }}</el-button>
+            <el-button type="primary" @click="save">{{ $t('system.view.save') }}</el-button>
           </template>
         </el-dialog>
       </el-scrollbar>
@@ -150,7 +150,7 @@ export default {
     },
     removeGroup() {
       if (!this.selectedItem || this.selectedItem.id === 0) return;
-      this.$confirm(this.$t('system.view.confirmRemove'), this.$t('system.view.notify'))
+      this.$confirm(this.$t('system.view.confirmRemove'))
         .then(async () => {
           try {
             let res = await removeGroup(this.selectedItem.id);

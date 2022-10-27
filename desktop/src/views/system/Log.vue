@@ -3,27 +3,29 @@
     <div class="toolbar-function">
     </div>
     <div class="toolbar-search">
-      <el-input v-model="module" clearable placeholder="模块" style="width: 180px;" />
-      <el-select v-model="category" clearable placeholder="分类" style="margin-left: 12px;">
-        <el-option label="调试" value="DEBUG" />
-        <el-option label="信息" value="INFO" />
-        <el-option label="警告" value="WARN" />
-        <el-option label="错误" value="ERROR" />
+      <el-input v-model="module" clearable :placeholder="$t('system.log.module')" style="width: 180px;" />
+      <el-select v-model="category" clearable :placeholder="$t('system.log.level')" style="margin-left: 12px;">
+        <el-option :label="$t('system.log.debug')" value="DEBUG" />
+        <el-option :label="$t('system.log.info')" value="INFO" />
+        <el-option :label="$t('system.log.warn')" value="WARN" />
+        <el-option :label="$t('system.log.error')" value="ERROR" />
       </el-select>
-      <el-input v-model="keyword" clearable placeholder="请输入关键字" style="width: 180px; margin-left: 12px;" />
-      <el-date-picker v-model="created_at" type="daterange" placeholder="创建时间" style="margin-left: 12px;" />
-      <el-button type="primary" style="margin-left: 12px;" @click="query(1)">搜索</el-button>
+      <el-input v-model="keyword" clearable :placeholder="$t('system.view.keywordHint')"
+        style="width: 180px; margin-left: 12px;" />
+      <el-date-picker v-model="created_at" type="daterange" :placeholder="$t('system.view.createdAt')"
+        style="margin-left: 12px;" />
+      <el-button type="primary" style="margin-left: 12px;" @click="query(1)">{{ $t('system.view.search') }}</el-button>
     </div>
   </div>
   <el-table :data="list">
-    <el-table-column prop="module" label="模块" width="180" />
-    <el-table-column prop="category" label="分类" width="60" align="center">
+    <el-table-column prop="module" :label="$t('system.log.module')" width="180" />
+    <el-table-column prop="category" :label="$t('system.log.level')" width="80" align="center">
       <template #default="scope">
         {{ getTitle(scope.row.category) }}
       </template>
     </el-table-column>
-    <el-table-column prop="content" label="内容" />
-    <el-table-column prop="created_at" label="创建时间" width="180" align="center">
+    <el-table-column prop="content" :label="$t('system.view.content')" />
+    <el-table-column prop="created_at" :label="$t('system.view.createdAt')" width="180" align="center">
       <template #default="scope">
         <span>{{ new Date(scope.row.created_at).format('yyyy-MM-dd HH:mm:ss') }}</span>
       </template>
@@ -60,7 +62,7 @@ export default {
         if (res.data.code !== 0) {
           this.$message({
             type: 'error',
-            message: '获取数据失败：' + res.data.msg
+            message: this.$t('system.view.loadFailed', [this.$t(res.data.msg)])
           });
         } else {
           this.total = res.data.data.total;
@@ -70,20 +72,20 @@ export default {
       } catch (err) {
         this.$message({
           type: 'error',
-          message: '获取数据失败：' + err.message
+          message: this.$t('system.view.loadFailed', [err.message])
         });
       }
     },
     getTitle(category) {
       switch (category) {
         case 'DEBUG':
-          return '调试';
+          return this.$t('system.log.debug');
         case 'INFO':
-          return '信息';
+          return this.$t('system.log.info');
         case 'WARN':
-          return '警告';
+          return this.$t('system.log.warn');
         case 'ERROR':
-          return '错误';
+          return this.$t('system.log.error');
         default:
           return '';
       }
