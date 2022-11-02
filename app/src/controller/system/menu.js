@@ -10,6 +10,7 @@ class MenuController {
       add: {
         parent_id: /^\d+$/,
         label: /^.{1,32}$/,
+        label_en: /^.{1,32}$/,
         type: /^[01]{1}$/,
         route: /.{0,128}/,
         icon: /.{0,32}/,
@@ -19,6 +20,7 @@ class MenuController {
         id: /^[1-9]\d*$/,
         parent_id: /^\d+$/,
         label: /^.{1,32}$/,
+        label_en: /^.{1,32}$/,
         type: /^[01]{1}$/,
         route: /.{0,128}/,
         icon: /.{0,32}/,
@@ -91,7 +93,7 @@ class MenuController {
     let tree = JSON.parse(JSON.stringify(securityService.menuTree));
     let roles = req.session.user.roles;
     let menus = [];
-    let dic = {};
+    let dic = {}, dic_en = {};
     for (let i = 0; i < roles.length; i++) {
       let arr = securityService.roles[roles[i] + ''].menus;
       for (let j = 0; j < arr.length; j++) {
@@ -103,19 +105,21 @@ class MenuController {
         tree.splice(i, 1);
       } else {
         dic[tree[i].route] = tree[i].label;
-        this.genMenuTree(tree[i], menus, dic);
+        dic_en[tree[i].route] = tree[i].label_en;
+        this.genMenuTree(tree[i], menus, dic, dic_en);
       }
     }
     res.send({
       code: 0,
       data: {
         tree: tree,
-        dic: dic
+        dic: dic,
+        dic_en: dic_en
       }
     });
   }
 
-  genMenuTree(node, menus, dic) {
+  genMenuTree(node, menus, dic, dic_en) {
     if (node.children.length === 0) {
       delete node.children;
       return;
@@ -125,7 +129,8 @@ class MenuController {
         node.children.splice(i, 1);
       } else {
         dic[node.children[i].route] = node.children[i].label;
-        this.genMenuTree(node.children[i], menus, dic);
+        dic_en[node.children[i].route] = node.children[i].label_en;
+        this.genMenuTree(node.children[i], menus, dic, dic_en);
       }
     }
   }

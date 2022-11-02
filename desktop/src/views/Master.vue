@@ -28,7 +28,7 @@
             <el-tag v-for="(item, index) in tags" :key="index" :type="item.path === path ? '' : 'info'"
               :effect="item.path === path ? 'dark' : 'light'" :closable="index > 0"
               style="cursor: pointer; margin-left: 5px;" @click="navi(item)" @close="close(item, index)">
-              {{ item.label }}
+              {{ $i18n.locale === 'zh' ? item.label : item.label_en }}
             </el-tag>
           </div>
         </el-scrollbar>
@@ -51,10 +51,12 @@ export default {
       path: '',
       tags: [{
         path: '/home',
-        label: this.$t('system.view.homepage')
+        label: '首页',
+        label_en: 'Home'
       }],
       tree: [],
-      dic: {}
+      dic: {},
+      dic_en: {}
     };
   },
   components: { MainMenu },
@@ -69,6 +71,7 @@ export default {
       } else {
         this.tree = res.data.data.tree;
         this.dic = res.data.data.dic;
+        this.dic_en = res.data.data.dic_en;
         this.fixMenu();
       }
     } catch (err) {
@@ -96,7 +99,8 @@ export default {
       if (!found) {
         this.tags.push({
           path: this.path,
-          label: this.dic[this.path] || ''
+          label: this.dic[this.path] || '',
+          label_en: this.dic_en[this.path] || ''
         });
       }
       this.$nextTick(() => {

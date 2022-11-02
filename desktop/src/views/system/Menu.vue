@@ -7,7 +7,8 @@
     </div>
   </div>
   <el-table row-key="id" :data="list">
-    <el-table-column prop="label" :label="$t('system.view.name')" />
+    <el-table-column v-if="$i18n.locale === 'zh'" prop="label" :label="$t('system.view.name')" />
+    <el-table-column v-if="$i18n.locale === 'en'" prop="label_en" :label="$t('system.view.name')" />
     <el-table-column prop="type" :label="$t('system.view.type')" width="120" align="center">
       <template #default="scope">
         {{ scope.row.type === 0 ? $t('system.menu.menu') : $t('system.menu.permission') }}
@@ -56,6 +57,9 @@
       <el-form-item :label="$t('system.view.name')">
         <el-input v-model="form.label" />
       </el-form-item>
+      <el-form-item :label="$t('system.view.nameEn')">
+        <el-input v-model="form.label_en" />
+      </el-form-item>
       <el-form-item :label="$t('system.view.type')">
         <el-select v-model="form.type">
           <el-option :label="$t('system.menu.menu')" :value="0" />
@@ -90,6 +94,7 @@ export default {
         id: 0,
         parent_id: 0,
         label: '',
+        label_en: '',
         type: 0,
         route: '',
         icon: '',
@@ -133,6 +138,7 @@ export default {
         id: 0,
         parent_id: row ? row.id : 0,
         label: '',
+        label_en: '',
         type: 0,
         route: '',
         icon: '',
@@ -145,6 +151,7 @@ export default {
         id: row.id,
         parent_id: row.parent_id === 0 ? null : row.parent_id,
         label: row.label,
+        label_en: row.label_en,
         type: row.type,
         route: row.route,
         icon: row.icon,
@@ -181,7 +188,7 @@ export default {
     async save() {
       let form = JSON.parse(JSON.stringify(this.form));
       if (!form.parent_id) form.parent_id = 0;
-      if (!form.label) {
+      if (!form.label || !form.label_en) {
         this.$message({
           type: 'warning',
           message: this.$t('system.view.incomplete')
